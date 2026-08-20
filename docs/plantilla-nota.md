@@ -1,0 +1,1 @@
+La plantilla original se conserva para reutilizar componentes visuales durante la integración. El flujo activo de Persona B usa `cumplimiento/` y `shared/` para respetar el contrato compartido.

@@ -1,0 +1,6 @@
+{
+  "name": "ZoFranca CR - Plataforma de Gestión y Cumplimiento",
+  "description": "Plataforma web integral para la gestión de solicitudes, evaluación con IA y monitoreo de cumplimiento de empresas bajo el Régimen de Zonas Francas en Costa Rica.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
