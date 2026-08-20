@@ -1,0 +1,66 @@
+{
+  "zonasFrancas": [
+    {
+      "id": 1,
+      "nombre": "Zona Franca Demo Central",
+      "inversionMinima": 500000,
+      "empleosMinimos": 20,
+      "sectoresPermitidos": [
+        "Tecnología",
+        "Manufactura avanzada",
+        "Servicios empresariales"
+      ]
+    },
+    {
+      "id": 2,
+      "nombre": "Parque Empresarial Pacífico Demo",
+      "inversionMinima": 300000,
+      "empleosMinimos": 12,
+      "sectoresPermitidos": [
+        "Logística",
+        "Dispositivos médicos",
+        "Tecnología"
+      ]
+    }
+  ],
+  "solicitudes": [
+    {
+      "id": 1,
+      "empresa": "NovaTech CR",
+      "sector": "Tecnología",
+      "inversionProyectada": 650000,
+      "empleosProyectados": 28,
+      "zonaFrancaId": 1,
+      "estado": "pendiente",
+      "puntaje": 0,
+      "justificacion": "",
+      "fecha": "2026-08-20"
+    },
+    {
+      "id": 2,
+      "empresa": "Pacífico Logistics",
+      "sector": "Logística",
+      "inversionProyectada": 180000,
+      "empleosProyectados": 8,
+      "zonaFrancaId": 2,
+      "estado": "pendiente",
+      "puntaje": 0,
+      "justificacion": "",
+      "fecha": "2026-08-20"
+    },
+    {
+      "id": 3,
+      "empresa": "AgroVerde Export",
+      "sector": "Agroindustria",
+      "inversionProyectada": 700000,
+      "empleosProyectados": 35,
+      "zonaFrancaId": 1,
+      "estado": "pendiente",
+      "puntaje": 0,
+      "justificacion": "",
+      "fecha": "2026-08-20"
+    }
+  ],
+  "empresas": [],
+  "reportesCumplimiento": []
+}
