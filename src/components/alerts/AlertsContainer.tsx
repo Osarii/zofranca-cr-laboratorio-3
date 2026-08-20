@@ -47,11 +47,11 @@ export const AlertsContainer: React.FC<AlertsContainerProps> = ({
             <div className="w-8 h-8 rounded-lg bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-600">
               <Bell className="w-4 h-4" />
             </div>
-            <h1 className="text-xl sm:text-[28px] font-extrabold text-[#0B2B4A] tracking-tight">
+            <h1 className="text-xl sm:text-[28px] font-extrabold text-[#5A1F2D] tracking-tight">
               Alertas de Cumplimiento
             </h1>
           </div>
-          <p className="text-xs text-[#4A5568] mt-1">
+          <p className="text-xs text-[#6B5A52] mt-1">
             Fiscalización y cumplimiento normativo del Régimen de Zonas Francas (Ley 7210)
           </p>
         </div>
@@ -65,13 +65,13 @@ export const AlertsContainer: React.FC<AlertsContainerProps> = ({
               <button
                 key={mode.id}
                 onClick={() => setActiveView(mode.id as any)}
-                className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2D9CDB] cursor-pointer ${
+                className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9A4D5D] cursor-pointer ${
                   isActive
-                    ? 'bg-[#0B2B4A] text-white shadow-xs'
-                    : 'text-[#4A5568] hover:text-[#0B2B4A] hover:bg-white/80'
+                    ? 'bg-[#5A1F2D] text-white shadow-xs'
+                    : 'text-[#6B5A52] hover:text-[#5A1F2D] hover:bg-white/80'
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#2D9CDB]' : 'text-slate-400'}`} />
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#9A4D5D]' : 'text-slate-400'}`} />
                 <span>{mode.label}</span>
               </button>
             );

@@ -78,10 +78,10 @@ export const AlertDetailModal: React.FC<AlertDetailModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#0B2B4A]/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 bg-[#5A1F2D]/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-in fade-in duration-150">
       <div className="bg-white rounded-2xl max-w-3xl w-full border border-slate-200 shadow-2xl overflow-hidden my-6">
         {/* Header */}
-        <div className="px-6 py-4 bg-[#0B2B4A] text-white flex items-center justify-between">
+        <div className="px-6 py-4 bg-[#5A1F2D] text-white flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white">
               {isHigh ? <AlertTriangle className="w-5 h-5 text-rose-400" /> : <AlertCircle className="w-5 h-5 text-amber-400" />}
@@ -111,10 +111,10 @@ export const AlertDetailModal: React.FC<AlertDetailModalProps> = ({
               <div className="w-12 h-12 bg-emerald-500 text-white rounded-full flex items-center justify-center mx-auto shadow-md">
                 <CheckCircle2 className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-extrabold text-[#0B2B4A]">
+              <h3 className="text-lg font-extrabold text-[#5A1F2D]">
                 Gestión Registrada Exitosamente
               </h3>
-              <p className="text-sm text-[#4A5568]">
+              <p className="text-sm text-[#6B5A52]">
                 El estado de la alerta ha sido actualizado y se archivó la constancia oficial en el expediente.
               </p>
             </div>
@@ -123,7 +123,7 @@ export const AlertDetailModal: React.FC<AlertDetailModalProps> = ({
               {/* Metadata Grid */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                  <div className="text-[11px] text-[#4A5568] uppercase font-bold">Severidad</div>
+                  <div className="text-[11px] text-[#6B5A52] uppercase font-bold">Severidad</div>
                   <div className="mt-1">
                     <span
                       className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-extrabold ${
@@ -137,22 +137,22 @@ export const AlertDetailModal: React.FC<AlertDetailModalProps> = ({
                 </div>
 
                 <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                  <div className="text-[11px] text-[#4A5568] uppercase font-bold">Categoría</div>
-                  <div className="mt-1 text-xs font-bold text-[#0B2B4A] flex items-center gap-1">
-                    {alert.category === 'Empleo' ? <Users className="w-3.5 h-3.5 text-[#2D9CDB]" /> : <DollarSign className="w-3.5 h-3.5 text-[#2D9CDB]" />}
+                  <div className="text-[11px] text-[#6B5A52] uppercase font-bold">Categoría</div>
+                  <div className="mt-1 text-xs font-bold text-[#5A1F2D] flex items-center gap-1">
+                    {alert.category === 'Empleo' ? <Users className="w-3.5 h-3.5 text-[#9A4D5D]" /> : <DollarSign className="w-3.5 h-3.5 text-[#9A4D5D]" />}
                     {alert.category}
                   </div>
                 </div>
 
                 <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                  <div className="text-[11px] text-[#4A5568] uppercase font-bold">Estado Actual</div>
+                  <div className="text-[11px] text-[#6B5A52] uppercase font-bold">Estado Actual</div>
                   <div className="mt-1 text-xs font-bold text-slate-800">
                     {alert.status}
                   </div>
                 </div>
 
                 <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                  <div className="text-[11px] text-[#4A5568] uppercase font-bold">Fecha Límite</div>
+                  <div className="text-[11px] text-[#6B5A52] uppercase font-bold">Fecha Límite</div>
                   <div className="mt-1 text-xs font-bold text-slate-800 flex items-center gap-1">
                     <Calendar className="w-3.5 h-3.5 text-slate-400" />
                     {alert.dueDate || '15 Mar 2026'}
@@ -162,7 +162,7 @@ export const AlertDetailModal: React.FC<AlertDetailModalProps> = ({
 
               {/* Problem Breakdown */}
               <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
-                <div className="text-xs font-bold text-[#0B2B4A] uppercase tracking-wide">
+                <div className="text-xs font-bold text-[#5A1F2D] uppercase tracking-wide">
                   Descripción del Incumplimiento Normativo
                 </div>
                 <p className="text-xs text-slate-700 leading-relaxed">
@@ -184,7 +184,7 @@ export const AlertDetailModal: React.FC<AlertDetailModalProps> = ({
 
               {/* Action Selection */}
               <div className="space-y-3">
-                <label className="text-xs font-bold text-[#0B2B4A] uppercase tracking-wide">
+                <label className="text-xs font-bold text-[#5A1F2D] uppercase tracking-wide">
                   Seleccionar Acción Correctiva
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -193,11 +193,11 @@ export const AlertDetailModal: React.FC<AlertDetailModalProps> = ({
                     onClick={() => setSelectedAction('notificar')}
                     className={`p-3 rounded-xl border text-xs font-bold text-left transition-all duration-150 cursor-pointer ${
                       selectedAction === 'notificar'
-                        ? 'border-[#2D9CDB] bg-sky-50 text-[#0B2B4A] shadow-xs'
+                        ? 'border-[#9A4D5D] bg-sky-50 text-[#5A1F2D] shadow-xs'
                         : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
                     }`}
                   >
-                    <Mail className="w-4 h-4 mb-1 text-[#2D9CDB]" />
+                    <Mail className="w-4 h-4 mb-1 text-[#9A4D5D]" />
                     <div>Notificar Formalmente</div>
                   </button>
 
@@ -206,11 +206,11 @@ export const AlertDetailModal: React.FC<AlertDetailModalProps> = ({
                     onClick={() => setSelectedAction('prorroga')}
                     className={`p-3 rounded-xl border text-xs font-bold text-left transition-all duration-150 cursor-pointer ${
                       selectedAction === 'prorroga'
-                        ? 'border-[#2D9CDB] bg-sky-50 text-[#0B2B4A] shadow-xs'
+                        ? 'border-[#9A4D5D] bg-sky-50 text-[#5A1F2D] shadow-xs'
                         : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
                     }`}
                   >
-                    <Clock className="w-4 h-4 mb-1 text-[#2D9CDB]" />
+                    <Clock className="w-4 h-4 mb-1 text-[#9A4D5D]" />
                     <div>Otorgar Prórroga</div>
                   </button>
 
@@ -219,11 +219,11 @@ export const AlertDetailModal: React.FC<AlertDetailModalProps> = ({
                     onClick={() => setSelectedAction('inspeccion')}
                     className={`p-3 rounded-xl border text-xs font-bold text-left transition-all duration-150 cursor-pointer ${
                       selectedAction === 'inspeccion'
-                        ? 'border-[#2D9CDB] bg-sky-50 text-[#0B2B4A] shadow-xs'
+                        ? 'border-[#9A4D5D] bg-sky-50 text-[#5A1F2D] shadow-xs'
                         : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
                     }`}
                   >
-                    <FileCheck className="w-4 h-4 mb-1 text-[#2D9CDB]" />
+                    <FileCheck className="w-4 h-4 mb-1 text-[#9A4D5D]" />
                     <div>Auditoría en Sitio</div>
                   </button>
 
@@ -246,8 +246,8 @@ export const AlertDetailModal: React.FC<AlertDetailModalProps> = ({
               <div className="space-y-3 bg-gradient-to-br from-sky-50/60 to-slate-50 p-4 rounded-xl border border-sky-100">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <Cpu className="w-4 h-4 text-[#2D9CDB]" />
-                    <span className="text-xs font-bold text-[#0B2B4A]">
+                    <Cpu className="w-4 h-4 text-[#9A4D5D]" />
+                    <span className="text-xs font-bold text-[#5A1F2D]">
                       Asistente IA ZoFranca: Redacción Automatizada de Oficio Legal
                     </span>
                   </div>
@@ -256,7 +256,7 @@ export const AlertDetailModal: React.FC<AlertDetailModalProps> = ({
                     type="button"
                     onClick={handleGenerateAIDraft}
                     disabled={isGeneratingAI}
-                    className="px-3 py-1.5 bg-[#2D9CDB] hover:bg-[#2387be] active:bg-[#1d73a3] text-white text-xs font-bold rounded-lg shadow-xs hover:shadow-md transition-all duration-150 flex items-center space-x-1.5 cursor-pointer disabled:opacity-50"
+                    className="px-3 py-1.5 bg-[#9A4D5D] hover:bg-[#7C3545] active:bg-[#713044] text-white text-xs font-bold rounded-lg shadow-xs hover:shadow-md transition-all duration-150 flex items-center space-x-1.5 cursor-pointer disabled:opacity-50"
                   >
                     {isGeneratingAI ? (
                       <>
@@ -292,7 +292,7 @@ export const AlertDetailModal: React.FC<AlertDetailModalProps> = ({
         {/* Footer actions */}
         {!sentSuccess && (
           <div className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
-            <div className="text-xs text-[#4A5568] flex items-center gap-1.5">
+            <div className="text-xs text-[#6B5A52] flex items-center gap-1.5">
               <User className="w-3.5 h-3.5 text-slate-400" />
               <span>Operando como: <strong className="text-slate-800">{currentUser}</strong></span>
             </div>
@@ -308,9 +308,9 @@ export const AlertDetailModal: React.FC<AlertDetailModalProps> = ({
               <button
                 type="button"
                 onClick={handleExecuteAction}
-                className="px-5 py-2 bg-[#0B2B4A] hover:bg-[#153e6b] active:bg-[#071d33] text-white text-xs font-bold rounded-xl shadow-xs hover:shadow-md transition-all duration-150 flex items-center space-x-1.5 cursor-pointer"
+                className="px-5 py-2 bg-[#5A1F2D] hover:bg-[#6E2638] active:bg-[#2B0D16] text-white text-xs font-bold rounded-xl shadow-xs hover:shadow-md transition-all duration-150 flex items-center space-x-1.5 cursor-pointer"
               >
-                <Send className="w-3.5 h-3.5 text-[#2D9CDB]" />
+                <Send className="w-3.5 h-3.5 text-[#9A4D5D]" />
                 <span>Aplicar Gestión</span>
               </button>
             </div>

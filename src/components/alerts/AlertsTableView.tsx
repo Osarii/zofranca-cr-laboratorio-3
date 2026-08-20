@@ -62,7 +62,7 @@ export const AlertsTableView: React.FC<AlertsTableViewProps> = ({
           <select
             value={severityFilter}
             onChange={(e) => setSeverityFilter(e.target.value)}
-            className="px-3 py-2 text-xs font-semibold bg-white border border-slate-200 rounded-lg text-[#0B2B4A] focus-turquoise cursor-pointer"
+            className="px-3 py-2 text-xs font-semibold bg-white border border-slate-200 rounded-lg text-[#5A1F2D] focus-turquoise cursor-pointer"
           >
             <option value="all">Todas las Severidades</option>
             <option value="Alta">Alta</option>
@@ -73,7 +73,7 @@ export const AlertsTableView: React.FC<AlertsTableViewProps> = ({
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 text-xs font-semibold bg-white border border-slate-200 rounded-lg text-[#0B2B4A] focus-turquoise cursor-pointer"
+            className="px-3 py-2 text-xs font-semibold bg-white border border-slate-200 rounded-lg text-[#5A1F2D] focus-turquoise cursor-pointer"
           >
             <option value="all">Todos los Estados</option>
             <option value="Pendiente">Pendiente</option>
@@ -110,19 +110,19 @@ export const AlertsTableView: React.FC<AlertsTableViewProps> = ({
                 >
                   <td className="py-3.5 px-4">
                     <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 rounded-lg bg-sky-50 border border-sky-100 flex items-center justify-center text-[#2D9CDB] shrink-0">
+                      <div className="w-8 h-8 rounded-lg bg-sky-50 border border-sky-100 flex items-center justify-center text-[#9A4D5D] shrink-0">
                         <Building2 className="w-4 h-4" />
                       </div>
                       <div>
-                        <div className="font-bold text-[#0B2B4A]">{alert.company}</div>
-                        <div className="text-xs text-[#4A5568]">{alert.zonaFranca || 'Gran Área Metropolitana'}</div>
+                        <div className="font-bold text-[#5A1F2D]">{alert.company}</div>
+                        <div className="text-xs text-[#6B5A52]">{alert.zonaFranca || 'Gran Área Metropolitana'}</div>
                       </div>
                     </div>
                   </td>
 
                   <td className="py-3.5 px-4">
                     <div className="font-semibold text-slate-900 text-xs">{alert.title}</div>
-                    <div className="text-[11px] text-[#4A5568] line-clamp-1 max-w-xs">{alert.tipoIncumplimiento || alert.description}</div>
+                    <div className="text-[11px] text-[#6B5A52] line-clamp-1 max-w-xs">{alert.tipoIncumplimiento || alert.description}</div>
                   </td>
 
                   <td className="py-3.5 px-4">
@@ -141,14 +141,14 @@ export const AlertsTableView: React.FC<AlertsTableViewProps> = ({
                   </td>
 
                   <td className="py-3.5 px-4">
-                    <div className="flex items-center space-x-1.5 text-xs text-[#4A5568]">
+                    <div className="flex items-center space-x-1.5 text-xs text-[#6B5A52]">
                       <User className="w-3.5 h-3.5 text-slate-400" />
                       <span>{alert.assignedTo || 'Laura Monge'}</span>
                     </div>
                   </td>
 
                   <td className="py-3.5 px-4">
-                    <div className="flex items-center space-x-1.5 text-xs text-[#4A5568]">
+                    <div className="flex items-center space-x-1.5 text-xs text-[#6B5A52]">
                       <Calendar className="w-3.5 h-3.5 text-slate-400" />
                       <span>{alert.dueDate || alert.date}</span>
                     </div>
@@ -173,7 +173,7 @@ export const AlertsTableView: React.FC<AlertsTableViewProps> = ({
                   <td className="py-3.5 px-4 text-right">
                     <button
                       onClick={() => onSelectAlert(alert)}
-                      className="px-3 py-1.5 bg-slate-100 hover:bg-[#0B2B4A] hover:text-white text-[#0B2B4A] rounded-lg text-xs font-bold transition-all duration-150 inline-flex items-center gap-1 cursor-pointer"
+                      className="px-3 py-1.5 bg-slate-100 hover:bg-[#5A1F2D] hover:text-white text-[#5A1F2D] rounded-lg text-xs font-bold transition-all duration-150 inline-flex items-center gap-1 cursor-pointer"
                     >
                       <span>Revisar</span>
                       <ChevronRight className="w-3.5 h-3.5" />
@@ -187,7 +187,7 @@ export const AlertsTableView: React.FC<AlertsTableViewProps> = ({
       </div>
 
       {filteredAlerts.length === 0 && (
-        <div className="p-8 text-center text-xs text-[#4A5568]">
+        <div className="p-8 text-center text-xs text-[#6B5A52]">
           No hay incidencias que coincidan con los criterios de búsqueda.
         </div>
       )}

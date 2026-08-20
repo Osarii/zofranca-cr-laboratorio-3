@@ -48,10 +48,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       {/* Top Welcome & Quick Actions */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-[28px] font-extrabold text-[#0B2B4A] tracking-tight">
+          <h1 className="text-[28px] font-extrabold text-[#5A1F2D] tracking-tight">
             Panel de Control Zonas Francas
           </h1>
-          <p className="text-base text-[#4A5568] mt-1">
+          <p className="text-base text-[#6B5A52] mt-1">
             Supervisión integral de empresas, cumplimiento de inversión y fiscalización Ley 7210
           </p>
         </div>
@@ -59,15 +59,15 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="flex items-center gap-2">
           <button
             onClick={() => onNavigateTab('reportes')}
-            className="px-4 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-[#0B2B4A] text-xs font-bold rounded-xl shadow-xs hover:shadow-md transition-all duration-150 flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-[#5A1F2D] text-xs font-bold rounded-xl shadow-xs hover:shadow-md transition-all duration-150 flex items-center gap-1.5 cursor-pointer"
           >
-            <BarChart3 className="w-4 h-4 text-[#2D9CDB]" />
+            <BarChart3 className="w-4 h-4 text-[#9A4D5D]" />
             <span>Auditoría de Cumplimiento</span>
           </button>
 
           <button
             onClick={onOpenNewSolicitud}
-            className="px-5 py-2.5 bg-[#2D9CDB] hover:bg-[#2387be] active:bg-[#1d73a3] text-white text-xs font-bold rounded-xl shadow-sm hover:shadow-md transition-all duration-150 flex items-center gap-2 cursor-pointer"
+            className="px-5 py-2.5 bg-[#9A4D5D] hover:bg-[#7C3545] active:bg-[#713044] text-white text-xs font-bold rounded-xl shadow-sm hover:shadow-md transition-all duration-150 flex items-center gap-2 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Nueva Solicitud</span>
@@ -83,12 +83,12 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm card-hover-effect cursor-pointer"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-[#4A5568] uppercase tracking-wider">Empresas Activas</span>
-            <div className="w-8 h-8 rounded-lg bg-sky-50 text-[#2D9CDB] flex items-center justify-center">
+            <span className="text-xs font-bold text-[#6B5A52] uppercase tracking-wider">Empresas Activas</span>
+            <div className="w-8 h-8 rounded-lg bg-sky-50 text-[#9A4D5D] flex items-center justify-center">
               <Building2 className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-3 text-[28px] font-extrabold text-[#0B2B4A]">
+          <div className="mt-3 text-[28px] font-extrabold text-[#5A1F2D]">
             {empresas.length}
           </div>
           <div className="text-xs text-emerald-600 font-semibold mt-0.5 flex items-center gap-1">
@@ -103,13 +103,13 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm card-hover-effect cursor-pointer"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-[#4A5568] uppercase tracking-wider">Inversión Acumulada</span>
+            <span className="text-xs font-bold text-[#6B5A52] uppercase tracking-wider">Inversión Acumulada</span>
             <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
               <DollarSign className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-3 text-[28px] font-extrabold text-[#0B2B4A]">
-            ${(totalInvestmentUSD / 1000000).toFixed(1)}M <span className="text-xs font-normal text-[#4A5568]">USD</span>
+          <div className="mt-3 text-[28px] font-extrabold text-[#5A1F2D]">
+            ${(totalInvestmentUSD / 1000000).toFixed(1)}M <span className="text-xs font-normal text-[#6B5A52]">USD</span>
           </div>
           <div className="text-xs text-emerald-600 font-semibold mt-0.5 flex items-center gap-1">
             <TrendingUp className="w-3.5 h-3.5" />
@@ -123,15 +123,15 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm card-hover-effect cursor-pointer"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-[#4A5568] uppercase tracking-wider">Empleos Directos</span>
+            <span className="text-xs font-bold text-[#6B5A52] uppercase tracking-wider">Empleos Directos</span>
             <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
               <Users className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-3 text-[28px] font-extrabold text-[#0B2B4A]">
+          <div className="mt-3 text-[28px] font-extrabold text-[#5A1F2D]">
             {totalEmployees.toLocaleString()}
           </div>
-          <div className="text-xs text-[#2D9CDB] font-semibold mt-0.5">
+          <div className="text-xs text-[#9A4D5D] font-semibold mt-0.5">
             Plazas formales validadas
           </div>
         </div>
@@ -142,7 +142,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm card-hover-effect cursor-pointer"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-[#4A5568] uppercase tracking-wider">Alertas de Desvío</span>
+            <span className="text-xs font-bold text-[#6B5A52] uppercase tracking-wider">Alertas de Desvío</span>
             <div className="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
               <AlertTriangle className="w-4 h-4" />
             </div>
@@ -166,14 +166,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <div className="w-7 h-7 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
                 <Bell className="w-4 h-4" />
               </div>
-              <h2 className="text-base font-bold text-[#0B2B4A]">
+              <h2 className="text-base font-bold text-[#5A1F2D]">
                 Alertas de Cumplimiento Prioritarias
               </h2>
             </div>
 
             <button
               onClick={() => onNavigateTab('alertas')}
-              className="text-xs font-bold text-[#2D9CDB] hover:underline flex items-center gap-0.5 cursor-pointer"
+              className="text-xs font-bold text-[#9A4D5D] hover:underline flex items-center gap-0.5 cursor-pointer"
             >
               <span>Ver todas</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -199,14 +199,14 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                       >
                         {alert.severity}
                       </span>
-                      <span className="font-bold text-xs text-[#0B2B4A] truncate">
+                      <span className="font-bold text-xs text-[#5A1F2D] truncate">
                         {alert.company}
                       </span>
                     </div>
                     <p className="text-xs text-slate-800 font-medium truncate">
                       {alert.title}
                     </p>
-                    <p className="text-[11px] text-[#4A5568]">
+                    <p className="text-[11px] text-[#6B5A52]">
                       Vence: {alert.dueDate || alert.date} • {alert.category}
                     </p>
                   </div>
@@ -217,7 +217,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                         {alert.deficitValue}
                       </span>
                     )}
-                    <span className="text-xs text-[#2D9CDB] font-semibold flex items-center gap-0.5">
+                    <span className="text-xs text-[#9A4D5D] font-semibold flex items-center gap-0.5">
                       Gestionar <ChevronRight className="w-3 h-3" />
                     </span>
                   </div>
@@ -231,17 +231,17 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
             <div className="flex items-center space-x-2">
-              <div className="w-7 h-7 rounded-lg bg-sky-50 text-[#2D9CDB] flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-sky-50 text-[#9A4D5D] flex items-center justify-center">
                 <FileText className="w-4 h-4" />
               </div>
-              <h2 className="text-base font-bold text-[#0B2B4A]">
+              <h2 className="text-base font-bold text-[#5A1F2D]">
                 Solicitudes de Régimen Recientes
               </h2>
             </div>
 
             <button
               onClick={() => onNavigateTab('solicitudes')}
-              className="text-xs font-bold text-[#2D9CDB] hover:underline flex items-center gap-0.5 cursor-pointer"
+              className="text-xs font-bold text-[#9A4D5D] hover:underline flex items-center gap-0.5 cursor-pointer"
             >
               <span>Ver todas</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -260,11 +260,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     <span className="text-[10px] font-mono font-bold text-slate-500 bg-slate-200/80 px-1.5 py-0.2 rounded">
                       {sol.id}
                     </span>
-                    <span className="font-bold text-xs text-[#0B2B4A] truncate">
+                    <span className="font-bold text-xs text-[#5A1F2D] truncate">
                       {sol.companyName}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2 text-[11px] text-[#4A5568]">
+                  <div className="flex items-center gap-2 text-[11px] text-[#6B5A52]">
                     <span className="flex items-center gap-1">
                       <MapPin className="w-3 h-3 text-slate-400" />
                       {sol.zonaFranca}

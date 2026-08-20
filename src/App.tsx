@@ -149,7 +149,7 @@ export default function App() {
   const abrirPdf = (solicitud: SolicitudApi) => setPdfSolicitud(adaptarSolicitud(solicitud, zonasFrancas));
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#f4f7fb] text-[#4A5568]">
+    <div className="flex min-h-screen flex-col bg-[#F7F0E6] text-[#6B5A52]">
       <Header
         currentTab={currentTab}
         setCurrentTab={navegar}

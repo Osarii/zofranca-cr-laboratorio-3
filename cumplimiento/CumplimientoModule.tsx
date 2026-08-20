@@ -202,8 +202,8 @@ export function CumplimientoModule() {
   if (cargando && empresas.length === 0) {
     return (
       <div className="bg-white rounded-2xl border border-slate-200 p-10 text-center">
-        <LoaderCircle className="w-7 h-7 mx-auto animate-spin text-[#2D9CDB]" />
-        <p className="mt-3 text-sm font-semibold text-[#0B2B4A]">Cargando cumplimiento...</p>
+        <LoaderCircle className="w-7 h-7 mx-auto animate-spin text-[#9A4D5D]" />
+        <p className="mt-3 text-sm font-semibold text-[#5A1F2D]">Cargando cumplimiento...</p>
       </div>
     );
   }
@@ -212,8 +212,8 @@ export function CumplimientoModule() {
     <div className="space-y-6 animate-in fade-in duration-200">
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
-          <h1 className="text-[28px] font-extrabold text-[#0B2B4A] tracking-tight">Cumplimiento y Fiscalización</h1>
-          <p className="text-base text-[#4A5568] mt-1">
+          <h1 className="text-[28px] font-extrabold text-[#5A1F2D] tracking-tight">Cumplimiento y Fiscalización</h1>
+          <p className="text-base text-[#6B5A52] mt-1">
             Reportes periódicos, comparación contractual, alertas, historial y métricas del proceso.
           </p>
         </div>
@@ -226,7 +226,7 @@ export function CumplimientoModule() {
           ] as const).map(([id, label, Icon]) => (
             <button key={id} onClick={() => setVista(id)}
               className={`px-3.5 py-2 rounded-xl text-xs font-bold border flex items-center gap-1.5 ${
-                vista === id ? 'bg-[#0B2B4A] text-white border-[#0B2B4A]' : 'bg-white text-[#4A5568] border-slate-200 hover:bg-slate-50'
+                vista === id ? 'bg-[#5A1F2D] text-white border-[#5A1F2D]' : 'bg-white text-[#6B5A52] border-slate-200 hover:bg-slate-50'
               }`}>
               <Icon className="w-3.5 h-3.5" /> {label}
             </button>
@@ -243,14 +243,14 @@ export function CumplimientoModule() {
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_.9fr] gap-6">
           <form onSubmit={registrarReporte} className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-5">
             <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
-              <div className="w-10 h-10 rounded-xl bg-sky-50 text-[#2D9CDB] flex items-center justify-center"><FileCheck2 className="w-5 h-5" /></div>
+              <div className="w-10 h-10 rounded-xl bg-sky-50 text-[#9A4D5D] flex items-center justify-center"><FileCheck2 className="w-5 h-5" /></div>
               <div>
-                <h2 className="text-base font-extrabold text-[#0B2B4A]">Reporte periódico de cumplimiento</h2>
-                <p className="text-xs text-[#4A5568]">RF-06 · Las metas se leen de la solicitud original.</p>
+                <h2 className="text-base font-extrabold text-[#5A1F2D]">Reporte periódico de cumplimiento</h2>
+                <p className="text-xs text-[#6B5A52]">RF-06 · Las metas se leen de la solicitud original.</p>
               </div>
             </div>
 
-            <label className="block text-xs font-bold text-[#0B2B4A]">
+            <label className="block text-xs font-bold text-[#5A1F2D]">
               Empresa instalada
               <select value={empresaId} onChange={(e) => setEmpresaId(Number(e.target.value))}
                 className="mt-1.5 w-full px-3 py-2.5 rounded-lg border border-slate-200 bg-white font-medium text-sm focus-turquoise">
@@ -273,14 +273,14 @@ export function CumplimientoModule() {
             </div>
 
             <button disabled={enviando}
-              className="w-full px-4 py-3 bg-[#2D9CDB] hover:bg-[#2387be] text-white rounded-xl text-sm font-extrabold flex items-center justify-center gap-2 disabled:opacity-60">
+              className="w-full px-4 py-3 bg-[#9A4D5D] hover:bg-[#7C3545] text-white rounded-xl text-sm font-extrabold flex items-center justify-center gap-2 disabled:opacity-60">
               {enviando ? <LoaderCircle className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
               {enviando ? 'Registrando...' : 'Registrar reporte'}
             </button>
           </form>
 
           <div className="space-y-4">
-            <div className="bg-[#0B2B4A] text-white rounded-2xl p-6">
+            <div className="bg-[#5A1F2D] text-white rounded-2xl p-6">
               <p className="text-xs uppercase tracking-wider text-slate-300 font-bold">RF-07 · Comparación automática</p>
               <h3 className="mt-2 text-lg font-extrabold">Último resultado</h3>
               {resultados[resultados.length - 1] ? (
@@ -291,8 +291,8 @@ export function CumplimientoModule() {
               ) : <p className="mt-3 text-sm text-slate-300">Todavía no hay reportes para esta empresa.</p>}
             </div>
             <div className="bg-white border border-slate-200 rounded-2xl p-5">
-              <h3 className="font-extrabold text-[#0B2B4A] text-sm">Regla de negocio</h3>
-              <p className="mt-2 text-xs leading-relaxed text-[#4A5568]">
+              <h3 className="font-extrabold text-[#5A1F2D] text-sm">Regla de negocio</h3>
+              <p className="mt-2 text-xs leading-relaxed text-[#6B5A52]">
                 Empleo cumple si real ≥ proyectado. Inversión cumple si ejecutada ≥ proyectada. Si falla cualquiera, el reporte queda incumplido.
               </p>
             </div>
@@ -311,8 +311,8 @@ export function CumplimientoModule() {
 
 function Campo({ label, value, onChange, type, Icon }: { label: string; value: string; onChange: (v: string) => void; type: string; Icon: React.ElementType }) {
   return (
-    <label className="text-xs font-bold text-[#0B2B4A]">
-      <span className="flex items-center gap-1.5"><Icon className="w-3.5 h-3.5 text-[#2D9CDB]" />{label}</span>
+    <label className="text-xs font-bold text-[#5A1F2D]">
+      <span className="flex items-center gap-1.5"><Icon className="w-3.5 h-3.5 text-[#9A4D5D]" />{label}</span>
       <input required min={type === 'date' ? undefined : 0} type={type} value={value} onChange={(e) => onChange(e.target.value)}
         className="mt-1.5 w-full px-3 py-2.5 rounded-lg border border-slate-200 bg-white text-sm focus-turquoise" />
     </label>
@@ -333,11 +333,11 @@ function PanelAlertas({ alertas }: { alertas: AlertaCumplimiento[] }) {
       </div>
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="p-5 border-b border-slate-100">
-          <h2 className="font-extrabold text-[#0B2B4A]">Panel de alertas</h2>
-          <p className="text-xs text-[#4A5568] mt-1">RF-08 · Derivadas de los compromisos reales de `solicitudes`.</p>
+          <h2 className="font-extrabold text-[#5A1F2D]">Panel de alertas</h2>
+          <p className="text-xs text-[#6B5A52] mt-1">RF-08 · Derivadas de los compromisos reales de `solicitudes`.</p>
         </div>
         {alertas.length === 0 ? (
-          <div className="p-10 text-center"><CheckCircle2 className="w-8 h-8 mx-auto text-emerald-500" /><p className="mt-2 text-sm font-bold text-[#0B2B4A]">Sin incumplimientos detectados</p></div>
+          <div className="p-10 text-center"><CheckCircle2 className="w-8 h-8 mx-auto text-emerald-500" /><p className="mt-2 text-sm font-bold text-[#5A1F2D]">Sin incumplimientos detectados</p></div>
         ) : (
           <div className="divide-y divide-slate-100">
             {alertas.map((a) => (
@@ -347,8 +347,8 @@ function PanelAlertas({ alertas }: { alertas: AlertaCumplimiento[] }) {
                     <span className={`px-2 py-1 rounded-full text-[10px] font-extrabold ${a.severidad === 'Alta' ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800'}`}>{a.severidad}</span>
                     <span className="text-[11px] font-bold text-slate-500">{a.categoria}</span>
                   </div>
-                  <h3 className="mt-1 text-sm font-extrabold text-[#0B2B4A]">{a.empresa} · {a.titulo}</h3>
-                  <p className="text-xs text-[#4A5568] mt-1">{a.descripcion}</p>
+                  <h3 className="mt-1 text-sm font-extrabold text-[#5A1F2D]">{a.empresa} · {a.titulo}</h3>
+                  <p className="text-xs text-[#6B5A52] mt-1">{a.descripcion}</p>
                 </div>
                 <div className="text-right"><div className="text-xs text-slate-500">Brecha</div><div className="font-extrabold text-rose-600">{a.brecha.toLocaleString('es-CR')}</div></div>
               </div>
@@ -365,8 +365,8 @@ function PanelHistorial({ empresa, solicitud, resultados }: { empresa?: Empresa;
     <div className="space-y-5">
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-xl bg-sky-50 text-[#2D9CDB] flex items-center justify-center"><History className="w-5 h-5" /></div>
-          <div><h2 className="text-base font-extrabold text-[#0B2B4A]">Trazabilidad de empresa</h2><p className="text-xs text-[#4A5568] mt-1">{empresa?.nombre ?? 'Seleccione una empresa'} → solicitud original → reportes → decisiones.</p></div>
+          <div className="w-10 h-10 rounded-xl bg-sky-50 text-[#9A4D5D] flex items-center justify-center"><History className="w-5 h-5" /></div>
+          <div><h2 className="text-base font-extrabold text-[#5A1F2D]">Trazabilidad de empresa</h2><p className="text-xs text-[#6B5A52] mt-1">{empresa?.nombre ?? 'Seleccione una empresa'} → solicitud original → reportes → decisiones.</p></div>
         </div>
         {solicitud && <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-3"><Dato label="Solicitud" value={`#${solicitud.id}`} /><Dato label="Estado" value={solicitud.estado} /><Dato label="Fecha solicitud" value={solicitud.fecha} /></div>}
       </div>
@@ -374,7 +374,7 @@ function PanelHistorial({ empresa, solicitud, resultados }: { empresa?: Empresa;
         {resultados.map((r) => (
           <div key={r.reporte.id} className="bg-white rounded-2xl border border-slate-200 p-5">
             <div className="flex items-center justify-between gap-4">
-              <div><p className="text-xs font-bold text-slate-500">Reporte #{r.reporte.id} · {r.reporte.fecha}</p><p className="mt-1 text-sm font-extrabold text-[#0B2B4A]">{r.cumple ? 'Cumplimiento confirmado' : 'Incumplimiento detectado'}</p></div>
+              <div><p className="text-xs font-bold text-slate-500">Reporte #{r.reporte.id} · {r.reporte.fecha}</p><p className="mt-1 text-sm font-extrabold text-[#5A1F2D]">{r.cumple ? 'Cumplimiento confirmado' : 'Incumplimiento detectado'}</p></div>
               <span className={`px-2.5 py-1 rounded-full text-xs font-extrabold ${r.cumple ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}`}>{r.cumple ? 'Cumple' : 'Incumple'}</span>
             </div>
             <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -394,8 +394,8 @@ function PanelHistorial({ empresa, solicitud, resultados }: { empresa?: Empresa;
 function PanelResumen({ resumen, alertas }: { resumen: ResumenCumplimiento; alertas: AlertaCumplimiento[] }) {
   const reducirMovimiento = useReducedMotion();
   const datosCumplimiento = [
-    { name: 'Cumplidos', value: resumen.cumplidos, fill: '#10b981' },
-    { name: 'Incumplidos', value: resumen.incumplidos, fill: '#f43f5e' },
+    { name: 'Cumplidos', value: resumen.cumplidos, fill: '#737B55' },
+    { name: 'Incumplidos', value: resumen.incumplidos, fill: '#7C2D3E' },
   ];
   const datosAlertas = Object.entries(
     alertas.reduce<Record<string, number>>((acumulado, alerta) => {
@@ -416,16 +416,16 @@ function PanelResumen({ resumen, alertas }: { resumen: ResumenCumplimiento; aler
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <motion.div initial={{ opacity: 0, x: -14 }} animate={{ opacity: 1, x: 0 }} className="bg-white rounded-2xl border border-slate-200 p-6">
-          <h2 className="text-base font-extrabold text-[#0B2B4A]">Resumen consolidado para PROCOMER</h2>
-          <p className="text-xs text-[#4A5568] mt-1">RF-09 · Estado agregado de los reportes.</p>
+          <h2 className="text-base font-extrabold text-[#5A1F2D]">Resumen consolidado para PROCOMER</h2>
+          <p className="text-xs text-[#6B5A52] mt-1">RF-09 · Estado agregado de los reportes.</p>
           <div className="mt-3 h-64" aria-label="Gráfica circular de cumplimiento de reportes">
             {resumen.totalReportes > 0 ? (
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie data={datosCumplimiento} dataKey="value" nameKey="name" innerRadius={58} outerRadius={90} paddingAngle={5} cornerRadius={7} isAnimationActive={!reducirMovimiento} animationDuration={1000} />
-                  <Tooltip contentStyle={{ borderRadius: 12, borderColor: '#e2e8f0', fontSize: 12 }} />
-                  <text x="50%" y="48%" textAnchor="middle" dominantBaseline="middle" fill="#0B2B4A" fontSize="24" fontWeight="800">{resumen.porcentajeCumplimiento}%</text>
-                  <text x="50%" y="59%" textAnchor="middle" dominantBaseline="middle" fill="#64748b" fontSize="11">cumplimiento</text>
+                  <Tooltip contentStyle={{ borderRadius: 12, borderColor: '#E8DCCB', fontSize: 12 }} />
+                  <text x="50%" y="48%" textAnchor="middle" dominantBaseline="middle" fill="#5A1F2D" fontSize="24" fontWeight="800">{resumen.porcentajeCumplimiento}%</text>
+                  <text x="50%" y="59%" textAnchor="middle" dominantBaseline="middle" fill="#75645C" fontSize="11">cumplimiento</text>
                 </PieChart>
               </ResponsiveContainer>
             ) : <div className="flex h-full items-center justify-center text-sm text-slate-400">Sin reportes para graficar.</div>}
@@ -433,20 +433,20 @@ function PanelResumen({ resumen, alertas }: { resumen: ResumenCumplimiento; aler
           <div className="grid grid-cols-2 gap-3"><Dato label="% recomendadas" value={`${resumen.porcentajeRecomendadas}%`} /><Dato label="Tiempo promedio" value={`${resumen.tiempoPromedio} días`} /></div>
         </motion.div>
         <motion.div initial={{ opacity: 0, x: 14 }} animate={{ opacity: 1, x: 0 }} className="bg-white rounded-2xl border border-slate-200 p-6">
-          <h2 className="text-base font-extrabold text-[#0B2B4A]">Alertas por categoría</h2>
-          <p className="text-xs text-[#4A5568] mt-1">Incumplimientos agrupados para priorizar la fiscalización.</p>
+          <h2 className="text-base font-extrabold text-[#5A1F2D]">Alertas por categoría</h2>
+          <p className="text-xs text-[#6B5A52] mt-1">Incumplimientos agrupados para priorizar la fiscalización.</p>
           <div className="mt-3 h-72" aria-label="Gráfica de barras de alertas por categoría">
             {datosAlertas.length > 0 ? (
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={datosAlertas} margin={{ top: 12, right: 8, left: -22, bottom: 8 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                  <XAxis dataKey="categoria" tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
-                  <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
-                  <Tooltip cursor={{ fill: '#f1f5f9' }} contentStyle={{ borderRadius: 12, borderColor: '#e2e8f0', fontSize: 12 }} />
-                  <Bar dataKey="total" name="Alertas" fill="#2D9CDB" radius={[8, 8, 0, 0]} isAnimationActive={!reducirMovimiento} animationDuration={1100} />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E8DCCB" />
+                  <XAxis dataKey="categoria" tick={{ fontSize: 11, fill: '#75645C' }} axisLine={false} tickLine={false} />
+                  <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: '#75645C' }} axisLine={false} tickLine={false} />
+                  <Tooltip cursor={{ fill: '#F4EBDD' }} contentStyle={{ borderRadius: 12, borderColor: '#E8DCCB', fontSize: 12 }} />
+                  <Bar dataKey="total" name="Alertas" fill="#9A4D5D" radius={[8, 8, 0, 0]} isAnimationActive={!reducirMovimiento} animationDuration={1100} />
                 </BarChart>
               </ResponsiveContainer>
-            ) : <div className="flex h-full flex-col items-center justify-center text-center"><CheckCircle2 className="h-9 w-9 text-emerald-500" /><p className="mt-2 text-sm font-bold text-[#0B2B4A]">No existen alertas activas</p></div>}
+            ) : <div className="flex h-full flex-col items-center justify-center text-center"><CheckCircle2 className="h-9 w-9 text-emerald-500" /><p className="mt-2 text-sm font-bold text-[#5A1F2D]">No existen alertas activas</p></div>}
           </div>
         </motion.div>
       </div>
@@ -455,8 +455,8 @@ function PanelResumen({ resumen, alertas }: { resumen: ResumenCumplimiento; aler
 }
 
 function Kpi({ icon: Icon, label, value }: { icon: React.ElementType; label: string; value: string | number }) {
-  return <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} whileHover={{ y: -3 }} className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5"><div className="flex items-center justify-between"><span className="text-xs font-bold uppercase tracking-wider text-[#4A5568]">{label}</span><Icon className="w-4 h-4 text-[#2D9CDB]" /></div><div className="mt-2 text-2xl font-extrabold text-[#0B2B4A]">{value}</div></motion.div>;
+  return <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} whileHover={{ y: -3 }} className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5"><div className="flex items-center justify-between"><span className="text-xs font-bold uppercase tracking-wider text-[#6B5A52]">{label}</span><Icon className="w-4 h-4 text-[#9A4D5D]" /></div><div className="mt-2 text-2xl font-extrabold text-[#5A1F2D]">{value}</div></motion.div>;
 }
 function Dato({ label, value }: { label: string; value: string }) {
-  return <div className="bg-slate-50 border border-slate-200 rounded-xl p-3"><div className="text-[10px] uppercase font-bold text-slate-500">{label}</div><div className="mt-1 text-sm font-extrabold text-[#0B2B4A]">{value}</div></div>;
+  return <div className="bg-slate-50 border border-slate-200 rounded-xl p-3"><div className="text-[10px] uppercase font-bold text-slate-500">{label}</div><div className="mt-1 text-sm font-extrabold text-[#5A1F2D]">{value}</div></div>;
 }
