@@ -1,0 +1,111 @@
+{
+  "zonasFrancas": [
+    {
+      "id": 1,
+      "nombre": "Zona Franca Coyol",
+      "inversionMinima": 500000000,
+      "empleosMinimos": 100,
+      "sectoresPermitidos": [
+        "Ciencias de la Vida",
+        "Manufactura Avanzada"
+      ]
+    },
+    {
+      "id": 2,
+      "nombre": "Zona Franca Metropolitana",
+      "inversionMinima": 300000000,
+      "empleosMinimos": 75,
+      "sectoresPermitidos": [
+        "Servicios Digitales",
+        "Manufactura Avanzada"
+      ]
+    }
+  ],
+  "solicitudes": [
+    {
+      "id": 1,
+      "empresa": "BioMed Solutions CR",
+      "sector": "Ciencias de la Vida",
+      "inversionProyectada": 500000000,
+      "empleosProyectados": 120,
+      "zonaFrancaId": 1,
+      "estado": "Recomendada",
+      "puntaje": 92,
+      "justificacion": "Cumple afinidad sectorial, inversión y empleo proyectado.",
+      "fecha": "2026-01-15"
+    },
+    {
+      "id": 2,
+      "empresa": "CloudFactory CR",
+      "sector": "Servicios Digitales",
+      "inversionProyectada": 300000000,
+      "empleosProyectados": 80,
+      "zonaFrancaId": 2,
+      "estado": "Recomendada",
+      "puntaje": 88,
+      "justificacion": "Perfil compatible con la zona y metas suficientes.",
+      "fecha": "2026-02-10"
+    },
+    {
+      "id": 3,
+      "empresa": "Nova Manufacturing",
+      "sector": "Manufactura Avanzada",
+      "inversionProyectada": 750000000,
+      "empleosProyectados": 150,
+      "zonaFrancaId": 1,
+      "estado": "Recomendada",
+      "puntaje": 95,
+      "justificacion": "Alta afinidad y compromisos de operación claros.",
+      "fecha": "2026-03-05"
+    }
+  ],
+  "empresas": [
+    {
+      "id": 1,
+      "nombre": "BioMed Solutions CR",
+      "solicitudId": 1,
+      "fechaInstalacion": "2026-02-01"
+    },
+    {
+      "id": 2,
+      "nombre": "CloudFactory CR",
+      "solicitudId": 2,
+      "fechaInstalacion": "2026-03-01"
+    },
+    {
+      "id": 3,
+      "nombre": "Nova Manufacturing",
+      "solicitudId": 3,
+      "fechaInstalacion": "2026-04-01"
+    }
+  ],
+  "reportesCumplimiento": [
+    {
+      "id": 1,
+      "empresaId": 1,
+      "empleosReales": 125,
+      "inversionEjecutada": 520000000,
+      "exportaciones": 180000000,
+      "fecha": "2026-06-30",
+      "cumple": true
+    },
+    {
+      "id": 2,
+      "empresaId": 2,
+      "empleosReales": 64,
+      "inversionEjecutada": 250000000,
+      "exportaciones": 90000000,
+      "fecha": "2026-06-30",
+      "cumple": false
+    },
+    {
+      "id": 3,
+      "empresaId": 3,
+      "empleosReales": 135,
+      "inversionEjecutada": 700000000,
+      "exportaciones": 210000000,
+      "fecha": "2026-06-30",
+      "cumple": false
+    }
+  ]
+}
