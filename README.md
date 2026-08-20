@@ -12,6 +12,10 @@ Módulo de admisión y evaluación de solicitudes integrado en la plantilla visu
 - RF-13: evaluación concurrente de pendientes mediante `Promise.all`.
 - RF-15: búsqueda y filtros por estado, zona, sector y fechas.
 - Vistas de formulario, tablero/listado y detalle de evaluación.
+- Notificaciones accesibles con estados de éxito, advertencia, información y error.
+- Sonidos locales para acciones relevantes, con control persistente para silenciarlos.
+- Transiciones de vistas y microinteracciones que respetan `prefers-reduced-motion`.
+- Gráficas animadas para estados de solicitudes, cumplimiento y categorías de alertas.
 
 ## Ejecución
 
@@ -65,9 +69,12 @@ src/
 ├── services/solicitudesApi.ts
 ├── shared/apiClient.ts
 ├── shared/estados.ts
+├── shared/feedback/
 ├── contrato.ts
 └── types.ts (compatibilidad con la plantilla)
 ```
+
+Los efectos de sonido se sirven desde `public/sounds` y no requieren conexión a servicios externos.
 
 Los errores de red se muestran en la interfaz y se registran en consola para facilitar el diagnóstico.
 

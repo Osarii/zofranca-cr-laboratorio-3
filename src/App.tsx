@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { AlertCircle, CheckCircle2, Info, X } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import { PersonaAHeader as Header } from './components/PersonaAHeader';
 import { AlertsContainer } from './components/alerts/AlertsContainer';
 import { SolicitudesListView } from './components/solicitudes/SolicitudesListView';
@@ -20,6 +20,7 @@ import {
   obtenerZonasFrancas,
 } from './services/solicitudesApi';
 import { evaluarSolicitud, evaluarSolicitudesPendientes } from './services/procesadorSolicitudes';
+import { useFeedback } from './shared/feedback/FeedbackProvider';
 import type {
   AlertItem,
   EmpresaItem,
@@ -27,10 +28,8 @@ import type {
 } from './types';
 import type { NuevaSolicitud, NuevaZonaFranca, SolicitudApi, ZonaFranca } from './contrato';
 
-type TipoAviso = 'exito' | 'error' | 'info';
-interface Aviso { tipo: TipoAviso; mensaje: string }
-
 export default function App() {
+  const { notificar } = useFeedback();
   const [currentTab, setCurrentTab] = useState<string>('solicitudes');
   const [currentUser, setCurrentUser] = useState<string>('Jared Prendas');
   const [alerts, setAlerts] = useState<AlertItem[]>(initialAlerts);
@@ -43,7 +42,6 @@ export default function App() {
   const [cargando, setCargando] = useState(true);
   const [procesando, setProcesando] = useState(false);
   const [errorCarga, setErrorCarga] = useState('');
-  const [aviso, setAviso] = useState<Aviso | null>(null);
 
   const solicitudesCompatibles = useMemo(
     () => solicitudes.map((solicitud) => adaptarSolicitud(solicitud, zonasFrancas)),
@@ -73,12 +71,6 @@ export default function App() {
 
   useEffect(() => { void cargarDatos(); }, [cargarDatos]);
 
-  useEffect(() => {
-    if (!aviso) return;
-    const temporizador = window.setTimeout(() => setAviso(null), 5500);
-    return () => window.clearTimeout(temporizador);
-  }, [aviso]);
-
   const reemplazarSolicitud = (actualizada: SolicitudApi) => {
     setSolicitudes((actuales) => actuales.map((item) =>
       String(item.id) === String(actualizada.id) ? actualizada : item));
@@ -95,11 +87,12 @@ export default function App() {
     try {
       const evaluada = await evaluarSolicitud(creada);
       reemplazarSolicitud(evaluada);
-      setAviso({ tipo: 'exito', mensaje: `Solicitud ${evaluada.id} evaluada: ${evaluada.estado} (${evaluada.puntaje}/100).` });
+      const tipo = evaluada.estado === 'Recomendada' ? 'exito' : evaluada.estado === 'Rechazada' ? 'error' : 'advertencia';
+      notificar(tipo, `Solicitud ${evaluada.id}: ${evaluada.estado}`, `Afinidad calculada: ${evaluada.puntaje}/100.`);
       return evaluada;
     } catch (fallo) {
       const mensaje = fallo instanceof Error ? fallo.message : 'No fue posible ejecutar la evaluación.';
-      setAviso({ tipo: 'error', mensaje: `La solicitud quedó guardada como pendiente. ${mensaje}` });
+      notificar('error', 'La solicitud quedó guardada como pendiente', mensaje);
       return creada;
     }
   };
@@ -108,10 +101,11 @@ export default function App() {
     try {
       const evaluada = await evaluarSolicitud(solicitud);
       reemplazarSolicitud(evaluada);
-      setAviso({ tipo: 'exito', mensaje: `Evaluación completada: ${evaluada.estado} con ${evaluada.puntaje}/100.` });
+      const tipo = evaluada.estado === 'Recomendada' ? 'exito' : evaluada.estado === 'Rechazada' ? 'error' : 'advertencia';
+      notificar(tipo, `Evaluación completada: ${evaluada.estado}`, `Puntaje de afinidad: ${evaluada.puntaje}/100.`);
     } catch (fallo) {
       const mensaje = fallo instanceof Error ? fallo.message : 'No fue posible evaluar la solicitud.';
-      setAviso({ tipo: 'error', mensaje });
+      notificar('error', 'No fue posible evaluar la solicitud', mensaje);
       throw fallo;
     }
   };
@@ -123,10 +117,10 @@ export default function App() {
       const porId = new Map(evaluadas.map((item) => [String(item.id), item]));
       setSolicitudes((actuales) => actuales.map((item) => porId.get(String(item.id)) ?? item));
       setSelectedSolicitud((actual) => actual ? porId.get(String(actual.id)) ?? actual : null);
-      setAviso({ tipo: 'exito', mensaje: `${evaluadas.length} solicitudes evaluadas en paralelo con Promise.all.` });
+      notificar('exito', `${evaluadas.length} solicitudes evaluadas`, 'El procesamiento paralelo finalizó correctamente.');
     } catch (fallo) {
       const mensaje = fallo instanceof Error ? fallo.message : 'La evaluación paralela no pudo completarse.';
-      setAviso({ tipo: 'error', mensaje });
+      notificar('error', 'La evaluación paralela no pudo completarse', mensaje);
       await cargarDatos();
     } finally {
       setProcesando(false);
@@ -136,15 +130,17 @@ export default function App() {
   const crearZonaFranca = async (datos: NuevaZonaFranca) => {
     const creada = await guardarZonaFranca(datos);
     setZonasFrancas((actuales) => [...actuales, creada]);
-    setAviso({ tipo: 'exito', mensaje: `Zona franca “${creada.nombre}” registrada correctamente.` });
+    notificar('exito', 'Zona franca registrada', `“${creada.nombre}” ya está disponible.`);
   };
 
   const activeAlertsCount = alerts.filter((item) => item.status !== 'Resuelta' && item.status !== 'Resuelto').length;
   const handleUpdateAlertStatus = (alertId: string, newStatus: string) => {
     setAlerts((actuales) => actuales.map((item) => item.id === alertId ? { ...item, status: newStatus as AlertItem['status'] } : item));
+    notificar('exito', 'Estado de alerta actualizado', `Nuevo estado: ${newStatus}.`);
   };
   const handleAssignAlert = (alertId: string, user: string) => {
     setAlerts((actuales) => actuales.map((item) => item.id === alertId ? { ...item, assignedTo: user, status: 'En Revisión' } : item));
+    notificar('notificacion', 'Alerta asignada', `${user} quedó a cargo de la revisión.`);
   };
   const navegar = (tab: string) => {
     setCurrentTab(tab);
@@ -154,17 +150,24 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen flex-col bg-[#f4f7fb] text-[#4A5568]">
-      <Header currentTab={currentTab} setCurrentTab={navegar} currentUser={currentUser} setCurrentUser={setCurrentUser} alertsCount={activeAlertsCount} onOpenNewSolicitud={() => setIsNewSolicitudOpen(true)} />
-
-      {aviso && (
-        <div className={`fixed right-4 top-20 z-50 flex max-w-md items-start gap-3 rounded-xl border p-4 shadow-xl ${aviso.tipo === 'exito' ? 'border-emerald-200 bg-emerald-50 text-emerald-800' : aviso.tipo === 'error' ? 'border-rose-200 bg-rose-50 text-rose-800' : 'border-sky-200 bg-sky-50 text-sky-800'}`} role="status">
-          {aviso.tipo === 'exito' ? <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0" /> : aviso.tipo === 'error' ? <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" /> : <Info className="mt-0.5 h-5 w-5 shrink-0" />}
-          <p className="text-sm font-semibold leading-relaxed">{aviso.mensaje}</p>
-          <button type="button" onClick={() => setAviso(null)} className="rounded p-1 hover:bg-black/5" aria-label="Cerrar aviso"><X className="h-4 w-4" /></button>
-        </div>
-      )}
+      <Header
+        currentTab={currentTab}
+        setCurrentTab={navegar}
+        currentUser={currentUser}
+        setCurrentUser={setCurrentUser}
+        alertsCount={activeAlertsCount}
+        onOpenNewSolicitud={() => setIsNewSolicitudOpen(true)}
+      />
 
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 lg:px-8">
+        <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={`${currentTab}-${selectedSolicitud?.id ?? 'principal'}`}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.22, ease: 'easeOut' }}
+        >
         {currentTab === 'dashboard' && (
           <DashboardView solicitudes={solicitudesCompatibles} alerts={alerts} empresas={companies} onNavigateTab={navegar} onOpenNewSolicitud={() => setIsNewSolicitudOpen(true)} onSelectAlert={() => setCurrentTab('alertas')} />
         )}
@@ -181,6 +184,8 @@ export default function App() {
         {currentTab === 'empresas' && <EmpresasView empresas={companies} />}
         {currentTab === 'reportes' && <CumplimientoModule />}
         {currentTab === 'configuracion' && <ConfiguracionView />}
+        </motion.div>
+        </AnimatePresence>
       </main>
 
       <NewSolicitudModal isOpen={isNewSolicitudOpen} zonasFrancas={zonasFrancas} onClose={() => setIsNewSolicitudOpen(false)} onSubmit={crearSolicitud} />

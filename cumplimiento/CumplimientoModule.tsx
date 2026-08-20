@@ -1,4 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
 import {
   AlertTriangle, BarChart3, Bell, Building2, CheckCircle2, Clock3,
   DollarSign, FileCheck2, History, LoaderCircle, Send, Users
@@ -9,13 +21,25 @@ import {
   type AlertaCumplimiento, type ResultadoComparacion
 } from './servicios';
 import type { Empresa, ReporteCumplimiento, Solicitud } from '../shared/types';
+import { useFeedback } from '../src/shared/feedback/FeedbackProvider';
 
 type Vista = 'reporte' | 'alertas' | 'historial' | 'resumen';
+
+interface ResumenCumplimiento {
+  totalReportes: number;
+  cumplidos: number;
+  incumplidos: number;
+  porcentajeCumplimiento: number;
+  totalSolicitudes: number;
+  porcentajeRecomendadas: number;
+  tiempoPromedio: number;
+}
 
 const moneda = (valor: number) =>
   `₡${valor.toLocaleString('es-CR', { maximumFractionDigits: 0 })}`;
 
 export function CumplimientoModule() {
+  const { notificar } = useFeedback();
   const [empresas, setEmpresas] = useState<Empresa[]>([]);
   const [solicitudes, setSolicitudes] = useState<Solicitud[]>([]);
   const [empresaId, setEmpresaId] = useState<number | ''>('');
@@ -153,6 +177,11 @@ export function CumplimientoModule() {
 
       await guardarReporte(datos);
       setMensaje('Reporte registrado y evaluado correctamente.');
+      notificar(
+        datos.cumple ? 'exito' : 'advertencia',
+        datos.cumple ? 'Reporte en cumplimiento' : 'Reporte con incumplimientos',
+        datos.cumple ? 'Los compromisos de empleo e inversión fueron alcanzados.' : 'Se generaron alertas para revisar las brechas detectadas.',
+      );
       setForm({
         empleosReales: '',
         inversionEjecutada: '',
@@ -164,6 +193,7 @@ export function CumplimientoModule() {
     } catch (e) {
       console.error(e);
       setError('No pudimos registrar el reporte. Revisá los datos e intentá de nuevo.');
+      notificar('error', 'No se pudo registrar el reporte', 'Revisá los valores e intentá nuevamente.');
     } finally {
       setEnviando(false);
     }
@@ -207,6 +237,8 @@ export function CumplimientoModule() {
       {error && <div className="bg-rose-50 border border-rose-200 text-rose-800 rounded-xl p-4 text-sm">{error}</div>}
       {mensaje && <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl p-4 text-sm flex items-center gap-2"><CheckCircle2 className="w-4 h-4" />{mensaje}</div>}
 
+      <AnimatePresence mode="wait" initial={false}>
+      <motion.div key={vista} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
       {vista === 'reporte' && (
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_.9fr] gap-6">
           <form onSubmit={registrarReporte} className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-5">
@@ -271,6 +303,8 @@ export function CumplimientoModule() {
       {vista === 'alertas' && <PanelAlertas alertas={alertas} />}
       {vista === 'historial' && <PanelHistorial empresa={empresas.find((e) => e.id === empresaId)} solicitud={solicitud} resultados={resultados} />}
       {vista === 'resumen' && <PanelResumen resumen={resumen} alertas={alertas} />}
+      </motion.div>
+      </AnimatePresence>
     </div>
   );
 }
@@ -357,7 +391,19 @@ function PanelHistorial({ empresa, solicitud, resultados }: { empresa?: Empresa;
   );
 }
 
-function PanelResumen({ resumen, alertas }: { resumen: any; alertas: AlertaCumplimiento[] }) {
+function PanelResumen({ resumen, alertas }: { resumen: ResumenCumplimiento; alertas: AlertaCumplimiento[] }) {
+  const reducirMovimiento = useReducedMotion();
+  const datosCumplimiento = [
+    { name: 'Cumplidos', value: resumen.cumplidos, fill: '#10b981' },
+    { name: 'Incumplidos', value: resumen.incumplidos, fill: '#f43f5e' },
+  ];
+  const datosAlertas = Object.entries(
+    alertas.reduce<Record<string, number>>((acumulado, alerta) => {
+      acumulado[alerta.categoria] = (acumulado[alerta.categoria] ?? 0) + 1;
+      return acumulado;
+    }, {}),
+  ).map(([categoria, total]) => ({ categoria, total }));
+
   return (
     <div className="space-y-5">
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -369,27 +415,47 @@ function PanelResumen({ resumen, alertas }: { resumen: any; alertas: AlertaCumpl
         <Kpi icon={Clock3} label="Días promedio" value={resumen.tiempoPromedio} />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <div className="bg-white rounded-2xl border border-slate-200 p-6">
+        <motion.div initial={{ opacity: 0, x: -14 }} animate={{ opacity: 1, x: 0 }} className="bg-white rounded-2xl border border-slate-200 p-6">
           <h2 className="text-base font-extrabold text-[#0B2B4A]">Resumen consolidado para PROCOMER</h2>
           <p className="text-xs text-[#4A5568] mt-1">RF-09 · Estado agregado de los reportes.</p>
-          <div className="mt-5 h-3 rounded-full bg-slate-100 overflow-hidden"><div className="h-full bg-emerald-500" style={{ width: `${resumen.porcentajeCumplimiento}%` }} /></div>
-          <p className="mt-3 text-xs text-slate-600">{alertas.length} alertas derivadas de incumplimientos.</p>
-        </div>
-        <div className="bg-white rounded-2xl border border-slate-200 p-6">
-          <h2 className="text-base font-extrabold text-[#0B2B4A]">Métricas del proceso</h2>
-          <p className="text-xs text-[#4A5568] mt-1">RF-18 · Solicitudes, aprobación y tiempo promedio.</p>
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            <Dato label="% recomendadas" value={`${resumen.porcentajeRecomendadas}%`} />
-            <Dato label="Tiempo promedio" value={`${resumen.tiempoPromedio} días`} />
+          <div className="mt-3 h-64" aria-label="Gráfica circular de cumplimiento de reportes">
+            {resumen.totalReportes > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie data={datosCumplimiento} dataKey="value" nameKey="name" innerRadius={58} outerRadius={90} paddingAngle={5} cornerRadius={7} isAnimationActive={!reducirMovimiento} animationDuration={1000} />
+                  <Tooltip contentStyle={{ borderRadius: 12, borderColor: '#e2e8f0', fontSize: 12 }} />
+                  <text x="50%" y="48%" textAnchor="middle" dominantBaseline="middle" fill="#0B2B4A" fontSize="24" fontWeight="800">{resumen.porcentajeCumplimiento}%</text>
+                  <text x="50%" y="59%" textAnchor="middle" dominantBaseline="middle" fill="#64748b" fontSize="11">cumplimiento</text>
+                </PieChart>
+              </ResponsiveContainer>
+            ) : <div className="flex h-full items-center justify-center text-sm text-slate-400">Sin reportes para graficar.</div>}
           </div>
-        </div>
+          <div className="grid grid-cols-2 gap-3"><Dato label="% recomendadas" value={`${resumen.porcentajeRecomendadas}%`} /><Dato label="Tiempo promedio" value={`${resumen.tiempoPromedio} días`} /></div>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, x: 14 }} animate={{ opacity: 1, x: 0 }} className="bg-white rounded-2xl border border-slate-200 p-6">
+          <h2 className="text-base font-extrabold text-[#0B2B4A]">Alertas por categoría</h2>
+          <p className="text-xs text-[#4A5568] mt-1">Incumplimientos agrupados para priorizar la fiscalización.</p>
+          <div className="mt-3 h-72" aria-label="Gráfica de barras de alertas por categoría">
+            {datosAlertas.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={datosAlertas} margin={{ top: 12, right: 8, left: -22, bottom: 8 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                  <XAxis dataKey="categoria" tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
+                  <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
+                  <Tooltip cursor={{ fill: '#f1f5f9' }} contentStyle={{ borderRadius: 12, borderColor: '#e2e8f0', fontSize: 12 }} />
+                  <Bar dataKey="total" name="Alertas" fill="#2D9CDB" radius={[8, 8, 0, 0]} isAnimationActive={!reducirMovimiento} animationDuration={1100} />
+                </BarChart>
+              </ResponsiveContainer>
+            ) : <div className="flex h-full flex-col items-center justify-center text-center"><CheckCircle2 className="h-9 w-9 text-emerald-500" /><p className="mt-2 text-sm font-bold text-[#0B2B4A]">No existen alertas activas</p></div>}
+          </div>
+        </motion.div>
       </div>
     </div>
   );
 }
 
 function Kpi({ icon: Icon, label, value }: { icon: React.ElementType; label: string; value: string | number }) {
-  return <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5"><div className="flex items-center justify-between"><span className="text-xs font-bold uppercase tracking-wider text-[#4A5568]">{label}</span><Icon className="w-4 h-4 text-[#2D9CDB]" /></div><div className="mt-2 text-2xl font-extrabold text-[#0B2B4A]">{value}</div></div>;
+  return <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} whileHover={{ y: -3 }} className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5"><div className="flex items-center justify-between"><span className="text-xs font-bold uppercase tracking-wider text-[#4A5568]">{label}</span><Icon className="w-4 h-4 text-[#2D9CDB]" /></div><div className="mt-2 text-2xl font-extrabold text-[#0B2B4A]">{value}</div></motion.div>;
 }
 function Dato({ label, value }: { label: string; value: string }) {
   return <div className="bg-slate-50 border border-slate-200 rounded-xl p-3"><div className="text-[10px] uppercase font-bold text-slate-500">{label}</div><div className="mt-1 text-sm font-extrabold text-[#0B2B4A]">{value}</div></div>;
