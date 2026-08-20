@@ -117,19 +117,56 @@ export const SolicitudesListView: React.FC<SolicitudesListViewProps> = ({
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {[
-          ['Total registradas', solicitudes.length, Building2, 'text-[#2D9CDB]', 'bg-sky-50'],
-          ['Pendientes IA', pendientes, Cpu, 'text-amber-600', 'bg-amber-50'],
-          ['Recomendadas', recomendadas, Sparkles, 'text-emerald-600', 'bg-emerald-50'],
-          ['Afinidad promedio', `${promedio}/100`, DollarSign, 'text-indigo-600', 'bg-indigo-50'],
-        ].map(([titulo, valor, Icono, color, fondo]) => (
-          <div key={String(titulo)} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#4A5568]">{String(titulo)}</span>
-              <span className={`flex h-8 w-8 items-center justify-center rounded-lg ${String(fondo)} ${String(color)}`}><Icono className="h-4 w-4" /></span>
-            </div>
-            <div className="mt-3 text-3xl font-extrabold text-[#0B2B4A]">{valor}</div>
-          </div>
-        ))}
+  {
+    titulo: 'Total registradas',
+    valor: solicitudes.length,
+    Icono: Building2,
+    color: 'text-[#2D9CDB]',
+    fondo: 'bg-sky-50',
+  },
+  {
+    titulo: 'Pendientes IA',
+    valor: pendientes,
+    Icono: Cpu,
+    color: 'text-amber-600',
+    fondo: 'bg-amber-50',
+  },
+  {
+    titulo: 'Recomendadas',
+    valor: recomendadas,
+    Icono: Sparkles,
+    color: 'text-emerald-600',
+    fondo: 'bg-emerald-50',
+  },
+  {
+    titulo: 'Afinidad promedio',
+    valor: `${promedio}/100`,
+    Icono: DollarSign,
+    color: 'text-indigo-600',
+    fondo: 'bg-indigo-50',
+  },
+].map(({ titulo, valor, Icono, color, fondo }) => (
+  <div
+    key={titulo}
+    className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+  >
+    <div className="flex items-center justify-between">
+      <span className="text-xs font-bold uppercase tracking-wider text-[#4A5568]">
+        {titulo}
+      </span>
+
+      <span
+        className={`flex h-8 w-8 items-center justify-center rounded-lg ${fondo} ${color}`}
+      >
+        <Icono className="h-4 w-4" />
+      </span>
+    </div>
+
+    <div className="mt-3 text-3xl font-extrabold text-[#0B2B4A]">
+      {valor}
+    </div>
+  </div>
+))}
       </div>
 
       <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm" aria-label="Filtros de solicitudes">

@@ -6,7 +6,7 @@ import { SolicitudesListView } from './components/solicitudes/SolicitudesListVie
 import { SolicitudDetailView } from './components/solicitudes/SolicitudDetailView';
 import { NewSolicitudModal } from './components/solicitudes/NewSolicitudModal';
 import { ZonasFrancasView } from './components/zonas/ZonasFrancasView';
-import { ReporteCumplimientoView } from './components/reportes/ReporteCumplimientoView';
+import { CumplimientoModule } from '../cumplimiento/CumplimientoModule';
 import { DashboardView } from './components/dashboard/DashboardView';
 import { EmpresasView } from './components/empresas/EmpresasView';
 import { ConfiguracionView } from './components/configuracion/ConfiguracionView';
@@ -179,7 +179,7 @@ export default function App() {
 
         {currentTab === 'zonas' && <ZonasFrancasView zonasFrancas={zonasFrancas} onCreate={crearZonaFranca} />}
         {currentTab === 'empresas' && <EmpresasView empresas={companies} />}
-        {currentTab === 'reportes' && <ReporteCumplimientoView empresas={companies} alerts={alerts} onOpenExportModal={() => solicitudes[0] && abrirPdf(solicitudes[0])} />}
+        {currentTab === 'reportes' && <CumplimientoModule />}
         {currentTab === 'configuracion' && <ConfiguracionView />}
       </main>
 
