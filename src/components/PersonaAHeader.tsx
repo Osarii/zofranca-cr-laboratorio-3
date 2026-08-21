@@ -17,6 +17,7 @@ import {
   X,
 } from 'lucide-react';
 import { AudioControl } from './common/AudioControl';
+import { CommandPalette } from './common/CommandPalette';
 import { ZoFrancaLogo } from './brand/ZoFrancaLogo';
 
 interface PersonaAHeaderProps {
@@ -42,6 +43,7 @@ export const PersonaAHeader: React.FC<PersonaAHeaderProps> = ({
 }) => {
   const [drawerAbierto, setDrawerAbierto] = React.useState(false);
   const [perfilAbierto, setPerfilAbierto] = React.useState(false);
+  const [comandosAbiertos, setComandosAbiertos] = React.useState(false);
 
   const opciones = [
     { id: 'dashboard', label: 'Dashboard', icono: LayoutDashboard },
@@ -102,10 +104,10 @@ export const PersonaAHeader: React.FC<PersonaAHeaderProps> = ({
       </aside>
 
       <header className="fixed left-64 right-0 top-0 z-40 hidden h-20 items-center justify-between border-b border-[#4d4732] bg-[#131313]/96 px-10 backdrop-blur lg:flex xl:px-12">
-        <label className="relative block w-full max-w-md">
+        <button type="button" onClick={() => setComandosAbiertos(true)} className="group relative block w-full max-w-md text-left" aria-label="Abrir buscador global">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#999077]" />
-          <input className="focus-turquoise w-full rounded-lg border border-[#4d4732] bg-[#1f1f1f] py-2.5 pl-10 pr-4 text-sm text-[#e2e2e2]" placeholder="Buscar expedientes, empresas..." />
-        </label>
+          <span className="flex w-full items-center justify-between rounded-lg border border-[#4d4732] bg-[#1f1f1f] py-2.5 pl-10 pr-3 text-sm text-[#77736a] transition group-hover:border-[#999077] group-hover:text-[#d0c6ab]"><span>Buscar o ejecutar una acción…</span><kbd className="rounded border border-[#4d4732] bg-[#131313] px-2 py-0.5 text-[10px] font-bold text-[#999077]">Ctrl K</kbd></span>
+        </button>
 
         <div className="ml-8 flex items-center gap-3">
           <button type="button" onClick={() => navegar('alertas')} className="relative rounded-full p-2.5 text-[#d0c6ab] hover:bg-[#2a2a2a] hover:text-[#ffd700]" aria-label="Ver alertas">
@@ -133,7 +135,7 @@ export const PersonaAHeader: React.FC<PersonaAHeaderProps> = ({
       <header className="fixed inset-x-0 top-0 z-50 flex h-16 items-center justify-between border-b border-[#4d4732] bg-[#0e0e0e] px-4 lg:hidden">
         <button type="button" onClick={() => setDrawerAbierto(true)} className="rounded-lg p-2 text-[#fff6df]" aria-label="Abrir menú"><Menu className="h-6 w-6" /></button>
         <button type="button" onClick={() => navegar('dashboard')} className="text-lg font-black tracking-tight text-[#ffd700]">ZoFranca CR</button>
-        <button type="button" onClick={() => navegar('alertas')} className="relative rounded-lg p-2 text-[#fff6df]" aria-label="Ver alertas"><Bell className="h-5 w-5" />{!!alertsCount && <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-[#ffd700]" />}</button>
+        <div className="flex items-center"><button type="button" onClick={() => setComandosAbiertos(true)} className="rounded-lg p-2 text-[#fff6df]" aria-label="Buscar"><Search className="h-5 w-5" /></button><button type="button" onClick={() => navegar('alertas')} className="relative rounded-lg p-2 text-[#fff6df]" aria-label="Ver alertas"><Bell className="h-5 w-5" />{!!alertsCount && <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-[#ffd700]" />}</button></div>
       </header>
 
       <AnimatePresence>
@@ -142,6 +144,7 @@ export const PersonaAHeader: React.FC<PersonaAHeaderProps> = ({
             <motion.button type="button" aria-label="Cerrar menú" onClick={() => setDrawerAbierto(false)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] bg-black/70 lg:hidden" />
             <motion.aside initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }} transition={{ type: 'spring', stiffness: 340, damping: 34 }} className="fixed inset-y-0 left-0 z-[70] flex w-[84vw] max-w-xs flex-col border-r border-[#4d4732] bg-[#0e0e0e] p-5 lg:hidden">
               <div className="flex items-center justify-between">{marca}<button type="button" onClick={() => setDrawerAbierto(false)} className="rounded-lg p-2 text-[#d0c6ab]"><X className="h-5 w-5" /></button></div>
+              <button type="button" onClick={() => { setDrawerAbierto(false); setComandosAbiertos(true); }} className="mt-6 flex items-center gap-3 rounded-lg border border-[#4d4732] bg-[#1f1f1f] px-4 py-3 text-left text-xs text-[#999077]"><Search className="h-4 w-4 text-[#ffd700]" />Buscar o ejecutar acción</button>
               <nav className="mt-8 flex-1 space-y-1.5">
                 {opciones.map(({ id, label, icono: Icono, badge }) => <button type="button" key={id} onClick={() => navegar(id)} className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm ${currentTab === id ? 'bg-[#fff6df] font-extrabold text-[#131313]' : 'font-semibold text-[#d0c6ab]'}`}><Icono className="h-5 w-5" />{label}{!!badge && <span className="ml-auto rounded-full bg-[#ffd700] px-2 py-0.5 text-[10px] font-bold text-[#131313]">{badge}</span>}</button>)}
               </nav>
@@ -162,6 +165,8 @@ export const PersonaAHeader: React.FC<PersonaAHeaderProps> = ({
           return <button type="button" key={id} onClick={() => navegar(id)} className={`relative flex min-w-[68px] flex-col items-center gap-1 rounded-xl px-3 py-2 text-[10px] font-bold transition ${activo ? 'bg-[#ffd700] text-[#131313]' : 'text-[#999077]'}`}><Icono className="h-5 w-5" />{label}{!!badge && id === 'alertas' && <span className="absolute right-1 top-1 rounded-full bg-[#93000a] px-1.5 text-[8px] text-[#ffdad6]">{badge}</span>}</button>;
         })}
       </nav>
+
+      <CommandPalette open={comandosAbiertos} onOpenChange={setComandosAbiertos} onNavigate={navegar} onOpenNewSolicitud={onOpenNewSolicitud} />
     </>
   );
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import NumberFlow from '@number-flow/react';
 import {
   AlertTriangle,
   ArrowRight,
@@ -150,7 +151,7 @@ const MetricCard: React.FC<MetricCardProps> = ({ icono: Icono, etiqueta, valor, 
       <div><h2 className="text-lg font-bold text-[#e2e2e2]">{etiqueta}</h2><p className="mt-1 text-xs text-[#999077]">{detalle}</p></div>
       <Icono className={`h-7 w-7 ${critica ? 'text-[#ffb4ab]' : 'text-[#ffd700]'}`} />
     </div>
-    <div className={`mt-12 text-6xl font-extrabold tracking-[-.04em] ${critica ? 'text-[#ffb4ab]' : 'text-[#fff6df]'}`}>{valor}</div>
+    <div className={`mt-12 text-6xl font-extrabold tabular-nums tracking-[-.04em] ${critica ? 'text-[#ffb4ab]' : 'text-[#fff6df]'}`}><NumberFlow value={valor} /></div>
     <div className={`mt-6 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.04em] ${critica ? 'text-[#ffb4ab]' : 'text-[#79f5ff]'}`}><TrendingUp className="h-4 w-4" /> {tendencia}</div>
   </button>
 );

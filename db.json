@@ -30,8 +30,8 @@
       "empleosProyectados": 120,
       "zonaFrancaId": 1,
       "estado": "Recomendada",
-      "puntaje": 92,
-      "justificacion": "Cumple afinidad sectorial, inversión y empleo proyectado.",
+      "puntaje": 100,
+      "justificacion": "Recomendada con 100/100. El sector Ciencias de la Vida está permitido. La inversión proyectada alcanza el mínimo solicitado. La proyección de empleos alcanza el mínimo solicitado.",
       "fecha": "2026-01-15"
     },
     {
@@ -57,6 +57,105 @@
       "puntaje": 95,
       "justificacion": "Alta afinidad y compromisos de operación claros.",
       "fecha": "2026-03-05"
+    },
+    {
+      "empresa": "prueba",
+      "sector": "Ciencias de la Vida",
+      "inversionProyectada": 1e+21,
+      "empleosProyectados": 100000000,
+      "zonaFrancaId": 1,
+      "estado": "Recomendada",
+      "puntaje": 100,
+      "justificacion": "Recomendada con 100/100. El sector Ciencias de la Vida está permitido. La inversión proyectada alcanza el mínimo solicitado. La proyección de empleos alcanza el mínimo solicitado.",
+      "fecha": "2026-08-21",
+      "id": 4
+    },
+    {
+      "empresa": "prueba",
+      "sector": "Servicios Digitales",
+      "inversionProyectada": 200,
+      "empleosProyectados": 45,
+      "zonaFrancaId": 2,
+      "estado": "Rechazada",
+      "puntaje": 46,
+      "justificacion": "Rechazada con 46/100. La solicitud de la empresa de Servicios Digitales fue rechazada al obtener un puntaje de 46, inferior al mínimo requerido. El incumplimiento se debe a que la inversión y el empleo proyectados no alcanzan los mínimos establecidos.",
+      "fecha": "2026-08-21",
+      "id": 5,
+      "evaluacionIa": {
+        "modelo": "gemini-3.5-flash",
+        "origen": "gemini",
+        "generadoEn": "2026-08-21T15:16:52.214Z",
+        "riesgos": [
+          "La inversión proyectada de 200 USD es críticamente inferior al mínimo de 300 millones USD.",
+          "El empleo proyectado de 45 puestos no cumple con el requisito mínimo de 75 empleos."
+        ],
+        "recomendaciones": [
+          "Notificar formalmente el rechazo de la solicitud debido al incumplimiento de los umbrales mínimos.",
+          "Sugerir a la empresa reestructurar su plan de negocios para alcanzar los requisitos de inversión y empleo."
+        ]
+      }
+    },
+    {
+      "empresa": "Steven Salas",
+      "sector": "Servicios Digitales",
+      "inversionProyectada": 200,
+      "empleosProyectados": 40,
+      "zonaFrancaId": 2,
+      "estado": "Rechazada",
+      "puntaje": 44,
+      "justificacion": "Rechazada con 44/100. La solicitud de Steven Salas fue rechazada debido a que no cumple con los requisitos mínimos de inversión ni de empleo proyectado.",
+      "fecha": "2026-08-21",
+      "id": 6,
+      "evaluacionIa": {
+        "modelo": "gemini-3.5-flash",
+        "origen": "gemini",
+        "generadoEn": "2026-08-21T16:02:42.814Z",
+        "riesgos": [
+          "Incumplimiento crítico de la inversión mínima requerida de 300 millones de USD al proyectar solo 200 USD.",
+          "Brecha significativa en la generación de empleo, proyectando solo 40 puestos de los 75 mínimos exigidos."
+        ],
+        "recomendaciones": [
+          "Notificar formalmente el rechazo de la solicitud debido al incumplimiento de los umbrales mínimos de inversión y empleo.",
+          "Sugerir al solicitante reestructurar su plan de negocios para ajustarse a los requisitos legales del Régimen de Zonas Francas."
+        ]
+      }
+    },
+    {
+      "empresa": "Steven salas 2",
+      "sector": "Servicios Digitales",
+      "inversionProyectada": 500,
+      "empleosProyectados": 200,
+      "zonaFrancaId": 2,
+      "estado": "Revisar",
+      "puntaje": 60,
+      "justificacion": "Revisar con 60/100. La solicitud se encuentra en estado de revisión debido a que la inversión proyectada de $500 no cumple con el mínimo legal de $300.000.000. A pesar de cumplir con el sector y el empleo, el puntaje de inversión es cero.",
+      "fecha": "2026-08-21",
+      "id": 7,
+      "evaluacionIa": {
+        "modelo": "gemini-3.5-flash",
+        "origen": "gemini",
+        "generadoEn": "2026-08-21T16:03:17.483Z",
+        "riesgos": [
+          "Incumplimiento crítico del requisito de inversión mínima para el Régimen de Zonas Francas.",
+          "Inviabilidad financiera del proyecto debido a la extrema brecha en el capital proyectado."
+        ],
+        "recomendaciones": [
+          "Prevenir al solicitante para que rectifique el monto de la inversión proyectada.",
+          "Verificar si existe un error de digitación en el plan de inversión presentado."
+        ]
+      }
+    },
+    {
+      "empresa": "Steven Salas",
+      "sector": "Servicios Digitales",
+      "inversionProyectada": 1e+22,
+      "empleosProyectados": 299,
+      "zonaFrancaId": 2,
+      "estado": "pendiente",
+      "puntaje": 0,
+      "justificacion": "",
+      "fecha": "2026-08-21",
+      "id": 8
     }
   ],
   "empresas": [

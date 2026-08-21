@@ -14,6 +14,13 @@ export async function evaluarSolicitud(solicitud: SolicitudApi): Promise<Solicit
     estado: resultado.estado,
     puntaje: resultado.puntaje,
     justificacion: resultado.justificacion,
+    evaluacionIa: {
+      modelo: resultado.modelo,
+      origen: resultado.origen,
+      generadoEn: resultado.generadoEn,
+      riesgos: resultado.riesgos,
+      recomendaciones: resultado.recomendaciones,
+    },
   });
 }
 

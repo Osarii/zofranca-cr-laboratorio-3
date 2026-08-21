@@ -4,8 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently -k -n API,WEB -c cyan,blue \"npm:dev:api\" \"npm:dev:web\"",
+    "dev": "concurrently -k -n DATA,AI,WEB -c cyan,yellow,blue \"npm:dev:api\" \"npm:dev:ai\" \"npm:dev:web\"",
     "dev:api": "json-server db.json --port 3001",
+    "dev:ai": "node --import tsx server/aiServer.ts",
     "dev:web": "vite --port=3000 --host=127.0.0.1",
     "build": "vite build",
     "preview": "vite preview",
@@ -15,8 +16,10 @@
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
+    "@number-flow/react": "^0.6.2",
     "@tailwindcss/vite": "^4.1.14",
     "@vitejs/plugin-react": "^5.0.4",
+    "cmdk": "^1.1.1",
     "dotenv": "^17.2.3",
     "express": "^4.21.2",
     "howler": "^2.2.4",

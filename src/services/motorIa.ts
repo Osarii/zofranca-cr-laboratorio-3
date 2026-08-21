@@ -16,6 +16,14 @@ export interface ResultadoEvaluacion {
   desglose: ComparacionAfinidad;
 }
 
+export interface ResultadoEvaluacionIA extends ResultadoEvaluacion {
+  riesgos: string[];
+  recomendaciones: string[];
+  modelo: string;
+  origen: 'gemini';
+  generadoEn: string;
+}
+
 const normalizar = (valor: unknown) =>
   String(valor ?? '')
     .normalize('NFD')
@@ -84,10 +92,47 @@ export function generarResultadoClasificacion(
 }
 
 export async function evaluarPerfilConIA(
-  solicitud: Pick<SolicitudApi, 'sector' | 'inversionProyectada' | 'empleosProyectados'>,
+  solicitud: Pick<SolicitudApi, 'empresa' | 'sector' | 'inversionProyectada' | 'empleosProyectados'>,
   zona: ZonaFranca,
-  latenciaMs = 600,
-) {
-  await new Promise((resolver) => setTimeout(resolver, latenciaMs));
-  return generarResultadoClasificacion(solicitud, zona);
+): Promise<ResultadoEvaluacionIA> {
+  const controlador = new AbortController();
+  const temporizador = window.setTimeout(() => controlador.abort(), 45000);
+
+  try {
+    const respuesta = await fetch('/api/evaluar', {
+      method: 'POST',
+      signal: controlador.signal,
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ solicitud, zona }),
+    });
+    const datos = await respuesta.json().catch(() => ({})) as Partial<ResultadoEvaluacionIA> & { message?: string };
+
+    if (!respuesta.ok) {
+      throw new Error(datos.message || `Gemini respondió con estado ${respuesta.status}.`);
+    }
+
+    if (
+      datos.origen !== 'gemini'
+      || typeof datos.puntaje !== 'number'
+      || typeof datos.justificacion !== 'string'
+      || !Array.isArray(datos.riesgos)
+      || !Array.isArray(datos.recomendaciones)
+      || typeof datos.modelo !== 'string'
+      || typeof datos.generadoEn !== 'string'
+      || !datos.desglose
+      || !datos.estado
+    ) {
+      throw new Error('Gemini devolvió una respuesta incompleta. Intente nuevamente.');
+    }
+
+    return datos as ResultadoEvaluacionIA;
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      throw new Error('Gemini tardó demasiado en responder. Intente nuevamente.');
+    }
+    if (error instanceof Error) throw error;
+    throw new Error('No fue posible conectar con el servicio de Gemini.');
+  } finally {
+    window.clearTimeout(temporizador);
+  }
 }

@@ -19,6 +19,13 @@ export interface SolicitudApi {
   puntaje: number;
   justificacion: string;
   fecha: string;
+  evaluacionIa?: {
+    modelo: string;
+    origen: 'gemini';
+    generadoEn: string;
+    riesgos: string[];
+    recomendaciones: string[];
+  };
 }
 
 export type NuevaSolicitud = Omit<SolicitudApi, 'id'>;

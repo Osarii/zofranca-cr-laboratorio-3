@@ -118,6 +118,51 @@
 .navigation-scroll { scrollbar-width: none; -ms-overflow-style: none; }
 .navigation-scroll::-webkit-scrollbar { display: none; }
 
+.command-group [cmdk-group-heading] {
+  padding: .75rem .75rem .4rem;
+  color: #999077;
+  font-size: .625rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.command-item {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  min-height: 3.75rem;
+  padding: .65rem .75rem;
+  border: 1px solid transparent;
+  border-radius: .5rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.command-item[data-selected='true'] {
+  border-color: #4d4732;
+  background: #2a2a2a;
+}
+
+.command-item[data-selected='true'] .command-icon {
+  border-color: #ffd700;
+  color: #ffd700;
+}
+
+.command-icon {
+  display: flex;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #4d4732;
+  border-radius: .5rem;
+  background: #131313;
+  color: #d0c6ab;
+  transition: border-color .15s ease, color .15s ease;
+}
+
 @media (max-width: 1023px) { body { padding-bottom: env(safe-area-inset-bottom); } }
 
 @media (prefers-reduced-motion: reduce) {

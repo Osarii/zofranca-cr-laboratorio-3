@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import NumberFlow from '@number-flow/react';
 import {
   AlertCircle,
   AlertTriangle,
@@ -102,4 +103,4 @@ export const AlertsContainer: React.FC<AlertsContainerProps> = ({ alerts, onUpda
   );
 };
 
-const Resumen: React.FC<{ etiqueta: string; valor: number; color: string; valorClase?: string }> = ({ etiqueta, valor, color, valorClase = 'text-[#fff6df]' }) => <article className={`rounded-lg border border-[#4d4732] border-l-4 bg-[#1f1f1f] p-4 sm:p-5 ${color}`}><p className="text-[9px] font-extrabold uppercase tracking-[.12em] text-[#999077] sm:text-[10px]">{etiqueta}</p><p className={`mt-3 text-3xl font-extrabold tracking-[-.03em] ${valorClase}`}>{valor}</p></article>;
+const Resumen: React.FC<{ etiqueta: string; valor: number; color: string; valorClase?: string }> = ({ etiqueta, valor, color, valorClase = 'text-[#fff6df]' }) => <article className={`rounded-lg border border-[#4d4732] border-l-4 bg-[#1f1f1f] p-4 sm:p-5 ${color}`}><p className="text-[9px] font-extrabold uppercase tracking-[.12em] text-[#999077] sm:text-[10px]">{etiqueta}</p><p className={`mt-3 text-3xl font-extrabold tabular-nums tracking-[-.03em] ${valorClase}`}><NumberFlow value={valor} /></p></article>;

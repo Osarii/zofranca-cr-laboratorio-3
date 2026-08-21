@@ -1,6 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   ArrowRight,
+  BrainCircuit,
   CalendarDays,
   Download,
   Eye,
@@ -55,6 +56,7 @@ export const SolicitudesListView: React.FC<SolicitudesListViewProps> = ({
   const [estado, setEstado] = useState<'todos' | EstadoSolicitud>('todos');
   const [zona, setZona] = useState('todas');
   const [filtrosMoviles, setFiltrosMoviles] = useState(false);
+  const [estadoIa, setEstadoIa] = useState<{ estado: 'comprobando' | 'activa' | 'sin-clave' | 'sin-conexion'; modelo: string }>({ estado: 'comprobando', modelo: 'Gemini' });
   const zonasPorId = useMemo(() => new Map(zonasFrancas.map((item) => [String(item.id), item])), [zonasFrancas]);
 
   const filtradas = useMemo(() => solicitudes.filter((solicitud) => {
@@ -68,12 +70,32 @@ export const SolicitudesListView: React.FC<SolicitudesListViewProps> = ({
   const pendientes = solicitudes.filter((item) => item.estado === ESTADOS_SOLICITUD.PENDIENTE).length;
   const fecha = (valor: string) => new Intl.DateTimeFormat('es-CR', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(`${valor}T12:00:00`));
 
+  useEffect(() => {
+    const controlador = new AbortController();
+    fetch('/api/estado', { signal: controlador.signal })
+      .then(async (respuesta) => {
+        if (!respuesta.ok) throw new Error('Servicio no disponible');
+        return respuesta.json() as Promise<{ configurado: boolean; modelo: string }>;
+      })
+      .then((datos) => setEstadoIa({ estado: datos.configurado ? 'activa' : 'sin-clave', modelo: datos.modelo }))
+      .catch((error: unknown) => {
+        if (!(error instanceof DOMException && error.name === 'AbortError')) setEstadoIa({ estado: 'sin-conexion', modelo: 'Gemini' });
+      });
+    return () => controlador.abort();
+  }, []);
+
   return (
     <div className="space-y-8">
       <header className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="mb-2 text-[11px] font-extrabold uppercase tracking-[.16em] text-[#ffd700]">Admisión al régimen</p>
-          <h1 className="text-3xl font-extrabold tracking-[-.025em] text-[#fff6df] sm:text-4xl lg:text-5xl">Gestión de Solicitudes</h1>
+          <div className="flex flex-wrap items-center gap-3">
+            <h1 className="text-3xl font-extrabold tracking-[-.025em] text-[#fff6df] sm:text-4xl lg:text-5xl">Gestión de Solicitudes</h1>
+            <span className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[10px] font-extrabold uppercase ${estadoIa.estado === 'activa' ? 'border-[#35d6a3]/50 bg-[#082019] text-[#55e8b8]' : estadoIa.estado === 'comprobando' ? 'border-[#4d4732] bg-[#1f1f1f] text-[#999077]' : 'border-[#983640]/60 bg-[#270f12] text-[#ffb4ab]'}`}>
+              <BrainCircuit className="h-3.5 w-3.5" />
+              {estadoIa.estado === 'activa' ? `${estadoIa.modelo} conectado` : estadoIa.estado === 'comprobando' ? 'Comprobando IA' : estadoIa.estado === 'sin-clave' ? 'Falta clave Gemini' : 'Servicio IA desconectado'}
+            </span>
+          </div>
           <p className="mt-2 text-sm text-[#d0c6ab] sm:text-base">Administre y supervise los trámites de ingreso al régimen.</p>
         </div>
         <button type="button" onClick={onOpenNewModal} className="hidden items-center gap-2 rounded-lg bg-[#ffd700] px-5 py-3 text-xs font-extrabold uppercase tracking-[.04em] text-[#131313] hover:bg-[#ffe16d] sm:flex"><Plus className="h-4 w-4" /> Nueva solicitud</button>

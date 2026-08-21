@@ -15,8 +15,17 @@ export default defineConfig(() => {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
       // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
-      // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
-      watch: process.env.DISABLE_HMR === 'true' ? null : {},
+      // JSON Server persiste cada evaluación en db.json. Ignorarlo evita que
+      // Vite interprete el guardado como un cambio de código y recargue la app.
+      watch: process.env.DISABLE_HMR === 'true'
+        ? null
+        : { ignored: ['**/db.json'] },
+      proxy: {
+        '/api': {
+          target: 'http://127.0.0.1:3002',
+          changeOrigin: true,
+        },
+      },
     },
     build: {
       rollupOptions: {
@@ -25,6 +34,7 @@ export default defineConfig(() => {
             charts: ['recharts'],
             feedback: ['howler', 'sonner'],
             motion: ['motion'],
+            modernUi: ['cmdk', '@number-flow/react'],
           },
         },
       },

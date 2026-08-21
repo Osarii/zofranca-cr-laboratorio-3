@@ -7,7 +7,7 @@ Módulo de admisión y evaluación de solicitudes integrado en la plantilla visu
 - RF-01: registro de zonas francas con inversión, empleos y sectores mínimos.
 - RF-02: formulario de solicitud de instalación.
 - RF-03: persistencia asíncrona mediante `json-server` y `db.json`.
-- RF-04: motor simulado de afinidad de 0 a 100 con justificación.
+- RF-04: evaluación real con Gemini, justificación, riesgos y recomendaciones.
 - RF-05: clasificación `Recomendada`, `Revisar` o `Rechazada`.
 - RF-13: evaluación concurrente de pendientes mediante `Promise.all`.
 - RF-15: búsqueda y filtros por estado, zona, sector y fechas.
@@ -23,6 +23,19 @@ Requiere Node.js 20 o superior.
 
 ```bash
 npm install
+```
+
+Antes del primer análisis con IA, cree una clave gratuita en [Google AI Studio](https://aistudio.google.com/apikey), copie `.env.example` como `.env` y reemplace el valor de `GEMINI_API_KEY`:
+
+```env
+GEMINI_API_KEY="su_clave_real"
+GEMINI_MODEL="gemini-3.6-flash"
+GEMINI_FALLBACK_MODELS="gemini-3.5-flash,gemini-2.5-flash"
+```
+
+Luego ejecute:
+
+```bash
 npm run dev
 ```
 
@@ -30,10 +43,13 @@ Interfaz: `http://localhost:3000`
 
 API REST: `http://localhost:3001`
 
+Servicio de IA: `http://localhost:3002`
+
 Servicios separados:
 
 ```bash
 npm run dev:api
+npm run dev:ai
 npm run dev:web
 ```
 
@@ -55,7 +71,12 @@ npm run build
 - `GET /solicitudes?estado=pendiente`
 - `PATCH /solicitudes/:id`
 
-La URL base se declara una sola vez en `src/shared/apiClient.ts`. El clasificador es local y determinista, por lo que la demostración no necesita credenciales externas y puede reiniciarse restaurando `db.json`.
+El puntaje y la clasificación se calculan mediante reglas locales verificables. Gemini 3.6 Flash utiliza esos resultados para elaborar la justificación, detectar riesgos y sugerir próximos pasos sin modificar el puntaje. La clave permanece exclusivamente en el servidor.
+
+- `GET /api/estado`: indica si Gemini está configurado y qué modelo utiliza.
+- `POST /api/evaluar`: ejecuta la evaluación de Gemini.
+
+Para desplegar en Vercel, agregue `GEMINI_API_KEY` y `GEMINI_MODEL` como variables de entorno del proyecto. Nunca utilice una variable `VITE_GEMINI_API_KEY`, porque expondría la clave en el navegador.
 
 ## Archivos principales
 
@@ -72,6 +93,12 @@ src/
 ├── shared/feedback/
 ├── contrato.ts
 └── types.ts (compatibilidad con la plantilla)
+server/
+├── aiServer.ts
+└── geminiService.ts
+api/
+├── estado.ts
+└── evaluar.ts
 ```
 
 Los efectos de sonido se sirven desde `public/sounds` y no requieren conexión a servicios externos.

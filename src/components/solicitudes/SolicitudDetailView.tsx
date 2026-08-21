@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   ArrowLeft,
+  AlertTriangle,
   BriefcaseBusiness,
   Building2,
   CheckCircle2,
@@ -9,6 +10,7 @@ import {
   DollarSign,
   Download,
   MapPin,
+  Lightbulb,
   RefreshCw,
   ShieldCheck,
   Sparkles,
@@ -67,7 +69,10 @@ export const SolicitudDetailView: React.FC<SolicitudDetailViewProps> = ({ solici
       <div className="grid gap-6 xl:grid-cols-[1.5fr_.7fr]">
         <div className="space-y-6">
           <section className="rounded-lg border border-[#4d4732] border-l-4 border-l-[#ffd700] bg-[#1f1f1f] p-6 sm:p-8">
-            <div className="flex items-center gap-3"><Cpu className="h-6 w-6 text-[#ffd700]" /><h2 className="text-xl font-bold text-[#fff6df]">Evaluación IA</h2></div>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-3"><Cpu className="h-6 w-6 text-[#ffd700]" /><h2 className="text-xl font-bold text-[#fff6df]">Evaluación IA</h2></div>
+              <span className={`rounded-full border px-3 py-1 text-[10px] font-extrabold uppercase ${solicitud.evaluacionIa ? 'border-[#35d6a3]/50 bg-[#082019] text-[#55e8b8]' : 'border-[#4d4732] bg-[#2a2a2a] text-[#999077]'}`}>{solicitud.evaluacionIa ? solicitud.evaluacionIa.modelo : 'Aún no ejecutada'}</span>
+            </div>
             <div className="mt-7 grid items-center gap-7 sm:grid-cols-[170px_1fr]">
               <div className="mx-auto flex h-40 w-40 items-center justify-center rounded-full p-2" style={{ background: `conic-gradient(#ffd700 ${puntaje * 3.6}deg, #353535 0deg)` }}>
                 <div className="flex h-full w-full flex-col items-center justify-center rounded-full bg-[#1f1f1f]"><span className="text-5xl font-extrabold tracking-[-.05em] text-[#ffd700]">{solicitud.estado === 'pendiente' ? '—' : puntaje}</span><span className="text-xs font-bold text-[#999077]">/ 100</span></div>
@@ -79,6 +84,20 @@ export const SolicitudDetailView: React.FC<SolicitudDetailViewProps> = ({ solici
               </div>
             </div>
           </section>
+
+          {solicitud.evaluacionIa && (
+            <section className="grid gap-4 rounded-lg border border-[#4d4732] bg-[#1f1f1f] p-5 sm:grid-cols-2 sm:p-6">
+              <div>
+                <div className="flex items-center gap-2 text-[#ffb4ab]"><AlertTriangle className="h-5 w-5" /><h2 className="font-bold text-[#fff6df]">Riesgos identificados</h2></div>
+                <ul className="mt-4 space-y-3">{solicitud.evaluacionIa.riesgos.map((riesgo) => <li key={riesgo} className="flex gap-2 text-sm leading-relaxed text-[#d0c6ab]"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#ffb4ab]" />{riesgo}</li>)}</ul>
+              </div>
+              <div className="border-t border-[#4d4732] pt-5 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
+                <div className="flex items-center gap-2 text-[#ffd700]"><Lightbulb className="h-5 w-5" /><h2 className="font-bold text-[#fff6df]">Recomendaciones</h2></div>
+                <ul className="mt-4 space-y-3">{solicitud.evaluacionIa.recomendaciones.map((recomendacion) => <li key={recomendacion} className="flex gap-2 text-sm leading-relaxed text-[#d0c6ab]"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#ffd700]" />{recomendacion}</li>)}</ul>
+              </div>
+              <p className="text-[10px] text-[#77736a] sm:col-span-2">Generado con {solicitud.evaluacionIa.modelo} el {new Intl.DateTimeFormat('es-CR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(solicitud.evaluacionIa.generadoEn))}. Resultado de apoyo; requiere revisión humana.</p>
+            </section>
+          )}
 
           <div className="hidden gap-6 md:grid md:grid-cols-2">
             <InfoCard titulo="Información general" icono={Building2}>
@@ -116,7 +135,7 @@ export const SolicitudDetailView: React.FC<SolicitudDetailViewProps> = ({ solici
           <section className="hidden rounded-lg border border-[#ffd700] bg-[#191805] p-6 lg:block">
             <ShieldCheck className="h-6 w-6 text-[#ffd700]" />
             <h2 className="mt-4 text-lg font-bold text-[#fff6df]">Acciones del analista</h2>
-            <p className="mt-2 text-xs leading-relaxed text-[#d0c6ab]">Ejecute o actualice la evaluación antes de emitir el dictamen final.</p>
+            <p className="mt-2 text-xs leading-relaxed text-[#d0c6ab]">Gemini analiza riesgos y redacta recomendaciones; el puntaje permanece respaldado por reglas verificables.</p>
             <button type="button" onClick={() => void evaluar()} disabled={evaluando} className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-[#ffd700] px-4 py-3 text-xs font-extrabold uppercase text-[#131313] hover:bg-[#ffe16d] disabled:opacity-50">{evaluando ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}{evaluando ? 'Evaluando…' : solicitud.estado === 'pendiente' ? 'Evaluar solicitud' : 'Reevaluar solicitud'}</button>
             <button type="button" onClick={onOpenExportModal} disabled={solicitud.estado === 'pendiente'} className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-[#4d4732] px-4 py-3 text-xs font-extrabold text-[#fff6df] hover:border-[#ffd700] disabled:opacity-40"><Download className="h-4 w-4" /> Emitir dictamen</button>
           </section>
