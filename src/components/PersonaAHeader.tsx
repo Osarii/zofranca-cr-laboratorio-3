@@ -4,14 +4,17 @@ import {
   BarChart3,
   Bell,
   Building2,
-  ChevronLeft,
-  ChevronRight,
   FileText,
+  HelpCircle,
   LayoutDashboard,
+  LogOut,
   MapPinned,
+  Menu,
   Plus,
+  Search,
   Settings,
   User,
+  X,
 } from 'lucide-react';
 import { AudioControl } from './common/AudioControl';
 import { ZoFrancaLogo } from './brand/ZoFrancaLogo';
@@ -23,6 +26,7 @@ interface PersonaAHeaderProps {
   setCurrentUser: (user: string) => void;
   alertsCount: number;
   onOpenNewSolicitud: () => void;
+  detailMode?: boolean;
 }
 
 const perfiles = ['Jared Prendas', 'Laura Monge', 'Carlos Rodríguez'];
@@ -34,111 +38,130 @@ export const PersonaAHeader: React.FC<PersonaAHeaderProps> = ({
   setCurrentUser,
   alertsCount,
   onOpenNewSolicitud,
+  detailMode = false,
 }) => {
-  const [menuAbierto, setMenuAbierto] = React.useState(false);
-  const navegacionMovilRef = React.useRef<HTMLElement>(null);
-  const [limitesScroll, setLimitesScroll] = React.useState({ inicio: true, fin: false });
+  const [drawerAbierto, setDrawerAbierto] = React.useState(false);
+  const [perfilAbierto, setPerfilAbierto] = React.useState(false);
+
   const opciones = [
     { id: 'dashboard', label: 'Dashboard', icono: LayoutDashboard },
     { id: 'solicitudes', label: 'Solicitudes', icono: FileText },
-    { id: 'zonas', label: 'Zonas', icono: MapPinned },
     { id: 'alertas', label: 'Alertas', icono: Bell, badge: alertsCount },
     { id: 'empresas', label: 'Empresas', icono: Building2 },
+    { id: 'zonas', label: 'Zonas francas', icono: MapPinned },
     { id: 'reportes', label: 'Cumplimiento', icono: BarChart3 },
     { id: 'configuracion', label: 'Configuración', icono: Settings },
   ];
 
-  const actualizarLimitesScroll = React.useCallback(() => {
-    const navegacion = navegacionMovilRef.current;
-    if (!navegacion) return;
-    setLimitesScroll({
-      inicio: navegacion.scrollLeft <= 4,
-      fin: navegacion.scrollLeft + navegacion.clientWidth >= navegacion.scrollWidth - 4,
-    });
-  }, []);
-
-  React.useEffect(() => {
-    const navegacion = navegacionMovilRef.current;
-    if (!navegacion) return undefined;
-    actualizarLimitesScroll();
-    navegacion.addEventListener('scroll', actualizarLimitesScroll, { passive: true });
-    window.addEventListener('resize', actualizarLimitesScroll);
-    return () => {
-      navegacion.removeEventListener('scroll', actualizarLimitesScroll);
-      window.removeEventListener('resize', actualizarLimitesScroll);
-    };
-  }, [actualizarLimitesScroll]);
-
-  React.useEffect(() => {
-    const activo = navegacionMovilRef.current?.querySelector<HTMLElement>(`[data-nav-id="${currentTab}"]`);
-    activo?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-  }, [currentTab]);
-
-  const desplazarNavegacion = (direccion: -1 | 1) => {
-    navegacionMovilRef.current?.scrollBy({ left: direccion * 230, behavior: 'smooth' });
+  const navegar = (id: string) => {
+    setCurrentTab(id);
+    setDrawerAbierto(false);
   };
 
+  const marca = (
+    <button type="button" onClick={() => navegar('dashboard')} className="flex items-center gap-3 text-left" aria-label="Ir al dashboard">
+      <ZoFrancaLogo className="h-10 w-10 shrink-0" />
+      <span>
+        <span className="block text-[19px] font-extrabold leading-tight tracking-[-.02em] text-[#fff6df]">ZoFranca CR</span>
+        <span className="mt-1 block text-[9px] font-bold uppercase tracking-[.18em] text-[#d0c6ab]">Gestión de cumplimiento</span>
+      </span>
+    </button>
+  );
+
   return (
-    <header className="sticky top-0 z-40 border-b border-[#D7B58A]/15 bg-[#5A1F2D]/95 text-white shadow-[0_12px_30px_-18px_rgba(63,17,30,.9)] backdrop-blur-xl">
-      <div className="h-0.5 bg-gradient-to-r from-transparent via-[#D7B58A] to-transparent opacity-80" />
-      <div className="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between gap-3">
-          <button type="button" onClick={() => setCurrentTab('solicitudes')} className="group flex shrink-0 items-center gap-2.5 rounded-xl py-1 text-left" aria-label="Ir a solicitudes">
-            <motion.span whileHover={{ rotate: -4, scale: 1.06 }} whileTap={{ scale: 0.94 }} className="relative flex shrink-0 drop-shadow-lg"><ZoFrancaLogo className="h-10 w-10" /><span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-[#5A1F2D] bg-emerald-400" /></motion.span>
-            <span className="hidden sm:block">
-              <span className="block text-lg font-black leading-none tracking-tight text-white">ZoFranca</span>
-              <span className="mt-1 block text-[9px] font-extrabold uppercase tracking-[0.22em] text-[#E7C9A5]">Costa Rica</span>
-            </span>
-          </button>
+    <>
+      <aside className="fixed inset-y-0 left-0 z-50 hidden w-64 flex-col border-r border-[#4d4732] bg-[#0e0e0e] px-6 py-7 lg:flex">
+        {marca}
 
-          <nav className="hidden min-w-0 items-center gap-1 rounded-xl border border-white/10 bg-black/10 p-1 shadow-inner min-[1450px]:flex" aria-label="Navegación principal">
-            {opciones.map(({ id, label, icono: Icono, badge }) => (
-              <button type="button" key={id} onClick={() => setCurrentTab(id)} className={`relative flex items-center gap-1.5 whitespace-nowrap rounded-lg px-2.5 py-2 text-xs font-semibold transition ${currentTab === id ? 'text-white' : 'text-slate-300 hover:bg-white/10 hover:text-white'}`}>
-                {currentTab === id && <motion.span layoutId="navegacion-activa" className="absolute inset-0 rounded-lg border border-[#D7B58A]/25 bg-gradient-to-b from-white/20 to-white/10 shadow-sm" transition={{ type: 'spring', stiffness: 420, damping: 34 }} />}
-                <span className="relative flex items-center gap-1.5"><Icono className={`h-4 w-4 ${currentTab === id ? 'text-[#E7C9A5]' : ''}`} />{label}</span>
-                {!!badge && <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} className="relative rounded-full bg-rose-500 px-1.5 text-[10px] font-bold">{badge}</motion.span>}
+        <nav className="mt-10 flex-1 space-y-1.5" aria-label="Navegación principal">
+          {opciones.map(({ id, label, icono: Icono, badge }) => {
+            const activo = currentTab === id;
+            return (
+              <button
+                type="button"
+                key={id}
+                onClick={() => navegar(id)}
+                className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-left text-sm transition ${activo ? 'bg-[#fff6df] font-extrabold text-[#131313]' : 'font-semibold text-[#d0c6ab] hover:bg-[#1f1f1f] hover:text-[#fff6df]'}`}
+              >
+                <Icono className="h-5 w-5 shrink-0" />
+                <span className="truncate">{label}</span>
+                {!!badge && <span className={`ml-auto rounded-full px-2 py-0.5 text-[10px] font-extrabold ${activo ? 'bg-[#93000a] text-[#ffdad6]' : 'bg-[#ffd700] text-[#131313]'}`}>{badge}</span>}
               </button>
-            ))}
-          </nav>
+            );
+          })}
+        </nav>
 
-          <div className="flex shrink-0 items-center gap-2">
-            <button type="button" onClick={onOpenNewSolicitud} className="hidden items-center gap-1.5 rounded-lg bg-[#9A4D5D] px-3.5 py-2 text-xs font-bold hover:bg-[#7C3545] sm:flex"><Plus className="h-4 w-4" /> Nueva solicitud</button>
-            <AudioControl />
-            <div className="relative">
-              <button type="button" onClick={() => setMenuAbierto((actual) => !actual)} className="flex items-center gap-2 rounded-lg p-2 hover:bg-white/10" aria-label="Cambiar perfil"><User className="h-4 w-4" /><span className="hidden max-w-28 truncate text-xs font-bold lg:block">{currentUser}</span></button>
-              <AnimatePresence>
-              {menuAbierto && (
-                <motion.div initial={{ opacity: 0, y: -8, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -8, scale: 0.97 }} className="absolute right-0 mt-2 w-52 origin-top-right rounded-xl border border-slate-200 bg-white p-2 text-slate-800 shadow-xl">
-                  {perfiles.map((perfil) => <button type="button" key={perfil} onClick={() => { setCurrentUser(perfil); setMenuAbierto(false); }} className={`w-full rounded-lg px-3 py-2 text-left text-xs hover:bg-slate-50 ${perfil === currentUser ? 'bg-sky-50 font-bold text-[#5A1F2D]' : ''}`}>{perfil}</button>)}
+        <button type="button" onClick={onOpenNewSolicitud} className="mb-6 flex w-full items-center justify-center gap-2 rounded-lg bg-[#ffd700] px-4 py-3 text-xs font-extrabold uppercase tracking-[.05em] text-[#131313] transition hover:bg-[#ffe16d] active:scale-[.98]">
+          <Plus className="h-4 w-4" /> Nueva solicitud
+        </button>
+
+        <div className="space-y-1 border-t border-[#4d4732] pt-5">
+          <button type="button" className="flex w-full items-center gap-3 rounded-lg px-4 py-2.5 text-xs font-semibold text-[#d0c6ab] hover:bg-[#1f1f1f] hover:text-[#fff6df]"><HelpCircle className="h-4 w-4" /> Ayuda</button>
+          <button type="button" className="flex w-full items-center gap-3 rounded-lg px-4 py-2.5 text-xs font-semibold text-[#d0c6ab] hover:bg-[#1f1f1f] hover:text-[#ffb4ab]"><LogOut className="h-4 w-4" /> Cerrar sesión</button>
+        </div>
+      </aside>
+
+      <header className="fixed left-64 right-0 top-0 z-40 hidden h-20 items-center justify-between border-b border-[#4d4732] bg-[#131313]/96 px-10 backdrop-blur lg:flex xl:px-12">
+        <label className="relative block w-full max-w-md">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#999077]" />
+          <input className="focus-turquoise w-full rounded-lg border border-[#4d4732] bg-[#1f1f1f] py-2.5 pl-10 pr-4 text-sm text-[#e2e2e2]" placeholder="Buscar expedientes, empresas..." />
+        </label>
+
+        <div className="ml-8 flex items-center gap-3">
+          <button type="button" onClick={() => navegar('alertas')} className="relative rounded-full p-2.5 text-[#d0c6ab] hover:bg-[#2a2a2a] hover:text-[#ffd700]" aria-label="Ver alertas">
+            <Bell className="h-5 w-5" />
+            {!!alertsCount && <span className="absolute right-0 top-0 h-2.5 w-2.5 rounded-full border-2 border-[#131313] bg-[#ffd700]" />}
+          </button>
+          <AudioControl />
+          <div className="h-7 w-px bg-[#4d4732]" />
+          <div className="relative">
+            <button type="button" onClick={() => setPerfilAbierto((actual) => !actual)} className="flex items-center gap-3 rounded-lg p-1.5 pr-3 hover:bg-[#1f1f1f]">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#4d4732] bg-[#2a2a2a] text-[#ffd700]"><User className="h-4 w-4" /></span>
+              <span className="text-left"><span className="block text-xs font-extrabold text-[#fff6df]">{currentUser}</span><span className="block text-[10px] text-[#999077]">Analista</span></span>
+            </button>
+            <AnimatePresence>
+              {perfilAbierto && (
+                <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="absolute right-0 mt-2 w-52 rounded-lg border border-[#4d4732] bg-[#1f1f1f] p-2">
+                  {perfiles.map((perfil) => <button type="button" key={perfil} onClick={() => { setCurrentUser(perfil); setPerfilAbierto(false); }} className={`w-full rounded-md px-3 py-2 text-left text-xs ${perfil === currentUser ? 'bg-[#ffd700] font-bold text-[#131313]' : 'text-[#d0c6ab] hover:bg-[#2a2a2a]'}`}>{perfil}</button>)}
                 </motion.div>
               )}
-              </AnimatePresence>
-            </div>
+            </AnimatePresence>
           </div>
         </div>
-        <div className="relative -mx-4 border-t border-white/10 sm:-mx-6 min-[1450px]:hidden">
-          <div className={`pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#5A1F2D] via-[#5A1F2D]/90 to-transparent transition-opacity ${limitesScroll.inicio ? 'opacity-0' : 'opacity-100'}`} />
-          <div className={`pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#5A1F2D] via-[#5A1F2D]/90 to-transparent transition-opacity ${limitesScroll.fin ? 'opacity-0' : 'opacity-100'}`} />
-          <button type="button" onClick={() => desplazarNavegacion(-1)} disabled={limitesScroll.inicio} aria-label="Ver opciones anteriores" className={`absolute left-1 top-1/2 z-20 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-[#6B2738] text-white shadow-lg transition ${limitesScroll.inicio ? 'pointer-events-none opacity-0' : 'opacity-100 hover:bg-[#7D3346]'}`}><ChevronLeft className="h-4 w-4" /></button>
-          <nav ref={navegacionMovilRef} className="navigation-scroll flex snap-x snap-mandatory gap-1 overflow-x-auto px-10 py-2 sm:px-12" aria-label="Navegación móvil">
-            {opciones.map(({ id, label, icono: Icono, badge }) => (
-              <motion.button
-                type="button"
-                data-nav-id={id}
-                key={id}
-                whileTap={{ scale: 0.96 }}
-                onClick={() => setCurrentTab(id)}
-                className={`relative flex shrink-0 snap-center items-center gap-1.5 overflow-hidden rounded-xl px-3.5 py-2 text-[11px] font-bold transition ${currentTab === id ? 'text-white shadow-lg' : 'text-slate-300 hover:bg-white/10 hover:text-white'}`}
-              >
-                {currentTab === id && <motion.span layoutId="navegacion-movil-activa" className="absolute inset-0 rounded-xl border border-[#D7B58A]/25 bg-gradient-to-r from-[#9A4D5D]/45 to-[#B88958]/20" transition={{ type: 'spring', stiffness: 380, damping: 32 }} />}
-                <span className="relative flex items-center gap-1.5"><Icono className={`h-3.5 w-3.5 ${currentTab === id ? 'text-[#E7C9A5]' : ''}`} />{label}</span>
-                {!!badge && <span className="relative rounded-full bg-rose-500 px-1.5 text-[9px] text-white">{badge}</span>}
-              </motion.button>
-            ))}
-          </nav>
-          <button type="button" onClick={() => desplazarNavegacion(1)} disabled={limitesScroll.fin} aria-label="Ver más opciones" className={`absolute right-1 top-1/2 z-20 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-[#6B2738] text-white shadow-lg transition ${limitesScroll.fin ? 'pointer-events-none opacity-0' : 'opacity-100 hover:bg-[#7D3346]'}`}><ChevronRight className="h-4 w-4" /></button>
-        </div>
-      </div>
-    </header>
+      </header>
+
+      <header className="fixed inset-x-0 top-0 z-50 flex h-16 items-center justify-between border-b border-[#4d4732] bg-[#0e0e0e] px-4 lg:hidden">
+        <button type="button" onClick={() => setDrawerAbierto(true)} className="rounded-lg p-2 text-[#fff6df]" aria-label="Abrir menú"><Menu className="h-6 w-6" /></button>
+        <button type="button" onClick={() => navegar('dashboard')} className="text-lg font-black tracking-tight text-[#ffd700]">ZoFranca CR</button>
+        <button type="button" onClick={() => navegar('alertas')} className="relative rounded-lg p-2 text-[#fff6df]" aria-label="Ver alertas"><Bell className="h-5 w-5" />{!!alertsCount && <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-[#ffd700]" />}</button>
+      </header>
+
+      <AnimatePresence>
+        {drawerAbierto && (
+          <>
+            <motion.button type="button" aria-label="Cerrar menú" onClick={() => setDrawerAbierto(false)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] bg-black/70 lg:hidden" />
+            <motion.aside initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }} transition={{ type: 'spring', stiffness: 340, damping: 34 }} className="fixed inset-y-0 left-0 z-[70] flex w-[84vw] max-w-xs flex-col border-r border-[#4d4732] bg-[#0e0e0e] p-5 lg:hidden">
+              <div className="flex items-center justify-between">{marca}<button type="button" onClick={() => setDrawerAbierto(false)} className="rounded-lg p-2 text-[#d0c6ab]"><X className="h-5 w-5" /></button></div>
+              <nav className="mt-8 flex-1 space-y-1.5">
+                {opciones.map(({ id, label, icono: Icono, badge }) => <button type="button" key={id} onClick={() => navegar(id)} className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm ${currentTab === id ? 'bg-[#fff6df] font-extrabold text-[#131313]' : 'font-semibold text-[#d0c6ab]'}`}><Icono className="h-5 w-5" />{label}{!!badge && <span className="ml-auto rounded-full bg-[#ffd700] px-2 py-0.5 text-[10px] font-bold text-[#131313]">{badge}</span>}</button>)}
+              </nav>
+              <button type="button" onClick={() => { onOpenNewSolicitud(); setDrawerAbierto(false); }} className="flex items-center justify-center gap-2 rounded-lg bg-[#ffd700] px-4 py-3 text-xs font-extrabold uppercase text-[#131313]"><Plus className="h-4 w-4" /> Nueva solicitud</button>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+
+      <nav className={`fixed inset-x-0 bottom-0 z-50 h-20 items-center justify-around border-t border-[#4d4732] bg-[#0e0e0e] px-2 pb-[env(safe-area-inset-bottom)] lg:hidden ${detailMode ? 'hidden' : 'flex'}`} aria-label="Navegación móvil">
+        {[
+          { id: 'dashboard', label: 'Inicio', icono: LayoutDashboard },
+          { id: 'solicitudes', label: 'Solicitudes', icono: FileText },
+          { id: 'alertas', label: 'Alertas', icono: Bell, badge: alertsCount },
+          { id: 'configuracion', label: 'Perfil', icono: User },
+        ].map(({ id, label, icono: Icono, badge }) => {
+          const activo = currentTab === id;
+          return <button type="button" key={id} onClick={() => navegar(id)} className={`relative flex min-w-[68px] flex-col items-center gap-1 rounded-xl px-3 py-2 text-[10px] font-bold transition ${activo ? 'bg-[#ffd700] text-[#131313]' : 'text-[#999077]'}`}><Icono className="h-5 w-5" />{label}{!!badge && id === 'alertas' && <span className="absolute right-1 top-1 rounded-full bg-[#93000a] px-1.5 text-[8px] text-[#ffdad6]">{badge}</span>}</button>;
+        })}
+      </nav>
+    </>
   );
 };

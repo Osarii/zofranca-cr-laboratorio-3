@@ -4,60 +4,60 @@ import { Settings, ShieldCheck, Scale, Bell, CheckCircle2, Cpu, Building2, Dolla
 export const ConfiguracionView: React.FC = () => {
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
-      <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-6">
+      <div className="bg-[#17181C] rounded-2xl p-6 border border-slate-200 shadow-sm space-y-6">
         <div>
-          <h1 className="text-[28px] font-extrabold text-[#5A1F2D] tracking-tight">
+          <h1 className="text-[28px] font-extrabold text-[#E1B84C] tracking-tight">
             Configuración y Parámetros Regulatorios
           </h1>
-          <p className="text-base text-[#6B5A52] mt-1">
+          <p className="text-base text-[#C5C2BA] mt-1">
             Reglas de validación, umbrales y motores de auditoría Ley 7210 Costa Rica
           </p>
         </div>
 
         <div className="space-y-4 text-xs">
           <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
-            <h3 className="font-bold text-[#5A1F2D] text-sm flex items-center gap-2">
-              <DollarSign className="w-4 h-4 text-[#9A4D5D]" />
+            <h3 className="font-bold text-[#E1B84C] text-sm flex items-center gap-2">
+              <DollarSign className="w-4 h-4 text-[#D2A12D]" />
               <span>Umbrales de Inversión Mínima (GAM vs Fuera de GAM)</span>
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
               <div>
-                <label className="font-semibold text-[#6B5A52] block mb-1">Dentro de Gran Área Metropolitana (GAM)</label>
+                <label className="font-semibold text-[#C5C2BA] block mb-1">Dentro de Gran Área Metropolitana (GAM)</label>
                 <input 
                   type="text" 
                   disabled 
                   value="USD $150,000 / $2,000,000 en Parque" 
-                  className="w-full bg-white border border-slate-300 rounded-lg p-2.5 font-mono font-bold text-slate-800 focus-turquoise" 
+                  className="w-full bg-[#17181C] border border-slate-300 rounded-lg p-2.5 font-mono font-bold text-slate-800 focus-turquoise"
                 />
               </div>
               <div>
-                <label className="font-semibold text-[#6B5A52] block mb-1">Fuera de GAM (Zonas Rurales / Costeras)</label>
+                <label className="font-semibold text-[#C5C2BA] block mb-1">Fuera de GAM (Zonas Rurales / Costeras)</label>
                 <input 
                   type="text" 
                   disabled 
                   value="USD $100,000 / $500,000 en Parque" 
-                  className="w-full bg-white border border-slate-300 rounded-lg p-2.5 font-mono font-bold text-slate-800 focus-turquoise" 
+                  className="w-full bg-[#17181C] border border-slate-300 rounded-lg p-2.5 font-mono font-bold text-slate-800 focus-turquoise"
                 />
               </div>
             </div>
           </div>
 
           <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
-            <h3 className="font-bold text-[#5A1F2D] text-sm flex items-center gap-2">
+            <h3 className="font-bold text-[#E1B84C] text-sm flex items-center gap-2">
               <Bell className="w-4 h-4 text-amber-500" />
               <span>Reglas de Disparo para Alertas Automáticas</span>
             </h3>
-            <div className="space-y-2.5 text-[#6B5A52]">
+            <div className="space-y-2.5 text-[#C5C2BA]">
               <label className="flex items-center space-x-2.5 cursor-pointer">
-                <input type="checkbox" defaultChecked className="rounded text-[#9A4D5D] focus:ring-[#9A4D5D]" />
+                <input type="checkbox" defaultChecked className="rounded text-[#D2A12D] focus:ring-[#A77B1C]" />
                 <span className="text-xs">Alerta automática cuando el empleo real reportado a CCSS sea menor al 90% del compromiso.</span>
               </label>
               <label className="flex items-center space-x-2.5 cursor-pointer">
-                <input type="checkbox" defaultChecked className="rounded text-[#9A4D5D] focus:ring-[#9A4D5D]" />
+                <input type="checkbox" defaultChecked className="rounded text-[#D2A12D] focus:ring-[#A77B1C]" />
                 <span className="text-xs">Notificación preventiva con 30 días de anticipación al vencimiento del canon PROCOMER.</span>
               </label>
               <label className="flex items-center space-x-2.5 cursor-pointer">
-                <input type="checkbox" defaultChecked className="rounded text-[#9A4D5D] focus:ring-[#9A4D5D]" />
+                <input type="checkbox" defaultChecked className="rounded text-[#D2A12D] focus:ring-[#A77B1C]" />
                 <span className="text-xs">Bloqueo preventivo de exenciones aduaneras TICA ante reporte de irregularidad tributaria.</span>
               </label>
             </div>

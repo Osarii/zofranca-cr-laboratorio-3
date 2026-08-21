@@ -1,10 +1,11 @@
 :root {
-  --zf-navy: #5A1F2D;
-  --zf-blue: #9A4D5D;
-  --zf-text: #6B5A52;
-  --zf-bg: #F7F0E6;
-  --zf-border: #E8DCCB;
-  --zf-success: #737B55;
-  --zf-warning: #B88958;
-  --zf-danger: #7C2D3E;
+  --zf-navy: #E1B84C;
+  --zf-blue: #D2A12D;
+  --zf-text: #C5C2BA;
+  --zf-bg: #0B0C0E;
+  --zf-surface: #17181C;
+  --zf-border: #34363C;
+  --zf-success: #73A087;
+  --zf-warning: #D2A12D;
+  --zf-danger: #C16873;
 }

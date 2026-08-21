@@ -1,25 +1,16 @@
 import React from 'react';
-import { SolicitudZF, AlertItem, EmpresaItem } from '../../types';
-import { 
-  Building2, 
-  FileText, 
-  Bell, 
-  AlertTriangle, 
-  CheckCircle2, 
-  BarChart3, 
-  Cpu, 
-  Users, 
-  DollarSign, 
-  MapPin, 
-  TrendingUp, 
-  TrendingDown, 
-  ChevronRight, 
-  Plus, 
-  Sparkles, 
-  ArrowUpRight,
-  ShieldCheck,
-  Briefcase
+import {
+  AlertTriangle,
+  ArrowRight,
+  BarChart3,
+  Bell,
+  CheckCircle2,
+  FileSearch,
+  FileText,
+  Plus,
+  TrendingUp,
 } from 'lucide-react';
+import type { AlertItem, EmpresaItem, SolicitudZF } from '../../types';
 
 interface DashboardViewProps {
   solicitudes: SolicitudZF[];
@@ -38,266 +29,128 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   onOpenNewSolicitud,
   onSelectAlert,
 }) => {
-  const totalInvestmentUSD = empresas.reduce((acc, curr) => acc + curr.totalInvestmentUSD, 0);
-  const totalEmployees = empresas.reduce((acc, curr) => acc + curr.employees, 0);
-  const highSeverityAlerts = alerts.filter((a) => a.severity === 'Alta');
-  const pendingSolicitudes = solicitudes.filter((s) => s.status === 'En Evaluación' || s.status === 'Pendiente');
+  const pendientes = solicitudes.filter((item) => item.status === 'Pendiente' || item.status === 'En Evaluación').length;
+  const criticas = alerts.filter((item) => item.severity === 'Alta' && item.status !== 'Resuelta' && item.status !== 'Resuelto');
+  const recientes = [
+    ...solicitudes.slice(0, 2).map((item) => ({
+      id: `sol-${item.id}`,
+      titulo: `Solicitud ${item.id} · ${item.companyName ?? item.company}`,
+      detalle: item.zonaFranca ?? item.location,
+      momento: item.submissionDate ?? item.date,
+      estado: item.status,
+      tipo: 'solicitud' as const,
+    })),
+    ...alerts.slice(0, 2).map((item) => ({
+      id: `alert-${item.id}`,
+      titulo: item.title,
+      detalle: item.company,
+      momento: item.date,
+      estado: item.status,
+      tipo: 'alerta' as const,
+      alerta: item,
+    })),
+  ].slice(0, 3);
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
-      {/* Top Welcome & Quick Actions */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <h1 className="text-[28px] font-extrabold text-[#5A1F2D] tracking-tight">
-            Panel de Control Zonas Francas
-          </h1>
-          <p className="text-base text-[#6B5A52] mt-1">
-            Supervisión integral de empresas, cumplimiento de inversión y fiscalización Ley 7210
-          </p>
-        </div>
+    <div className="space-y-10">
+      <section>
+        <h1 className="text-2xl font-extrabold tracking-[-.02em] text-[#fff6df] lg:hidden">Hola, Analista</h1>
+        <p className="mt-1 text-sm text-[#d0c6ab] lg:hidden">Resumen de tu jornada de hoy.</p>
 
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => onNavigateTab('reportes')}
-            className="px-4 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-[#5A1F2D] text-xs font-bold rounded-xl shadow-xs hover:shadow-md transition-all duration-150 flex items-center gap-1.5 cursor-pointer"
-          >
-            <BarChart3 className="w-4 h-4 text-[#9A4D5D]" />
-            <span>Auditoría de Cumplimiento</span>
-          </button>
-
-          <button
-            onClick={onOpenNewSolicitud}
-            className="px-5 py-2.5 bg-[#9A4D5D] hover:bg-[#7C3545] active:bg-[#713044] text-white text-xs font-bold rounded-xl shadow-sm hover:shadow-md transition-all duration-150 flex items-center gap-2 cursor-pointer"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Nueva Solicitud</span>
-          </button>
-        </div>
-      </div>
-
-      {/* 4 Main Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Card 1: Empresas */}
-        <div 
-          onClick={() => onNavigateTab('empresas')}
-          className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm card-hover-effect cursor-pointer"
-        >
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-[#6B5A52] uppercase tracking-wider">Empresas Activas</span>
-            <div className="w-8 h-8 rounded-lg bg-sky-50 text-[#9A4D5D] flex items-center justify-center">
-              <Building2 className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="mt-3 text-[28px] font-extrabold text-[#5A1F2D]">
-            {empresas.length}
-          </div>
-          <div className="text-xs text-emerald-600 font-semibold mt-0.5 flex items-center gap-1">
-            <TrendingUp className="w-3.5 h-3.5" />
-            <span>100% registradas en PROCOMER</span>
-          </div>
-        </div>
-
-        {/* Card 2: Inversión Total */}
-        <div 
-          onClick={() => onNavigateTab('reportes')}
-          className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm card-hover-effect cursor-pointer"
-        >
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-[#6B5A52] uppercase tracking-wider">Inversión Acumulada</span>
-            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
-              <DollarSign className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="mt-3 text-[28px] font-extrabold text-[#5A1F2D]">
-            ${(totalInvestmentUSD / 1000000).toFixed(1)}M <span className="text-xs font-normal text-[#6B5A52]">USD</span>
-          </div>
-          <div className="text-xs text-emerald-600 font-semibold mt-0.5 flex items-center gap-1">
-            <TrendingUp className="w-3.5 h-3.5" />
-            <span>+14.2% respecto a metas</span>
-          </div>
-        </div>
-
-        {/* Card 3: Empleos Directos */}
-        <div 
-          onClick={() => onNavigateTab('empresas')}
-          className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm card-hover-effect cursor-pointer"
-        >
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-[#6B5A52] uppercase tracking-wider">Empleos Directos</span>
-            <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
-              <Users className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="mt-3 text-[28px] font-extrabold text-[#5A1F2D]">
-            {totalEmployees.toLocaleString()}
-          </div>
-          <div className="text-xs text-[#9A4D5D] font-semibold mt-0.5">
-            Plazas formales validadas
-          </div>
-        </div>
-
-        {/* Card 4: Alertas Activas */}
-        <div 
-          onClick={() => onNavigateTab('alertas')}
-          className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm card-hover-effect cursor-pointer"
-        >
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-[#6B5A52] uppercase tracking-wider">Alertas de Desvío</span>
-            <div className="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
-              <AlertTriangle className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="mt-3 text-[28px] font-extrabold text-rose-600">
-            {alerts.length}
-          </div>
-          <div className="text-xs text-rose-600 font-semibold mt-0.5 flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-rose-600 animate-alert-pulse"></span>
-            <span>{highSeverityAlerts.length} casos de severidad alta</span>
-          </div>
-        </div>
-      </div>
-
-      {/* 2-Column Split: Active Alerts requiring attention & Recent Solicitudes */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Left Box: Critical Alerts */}
-        <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-            <div className="flex items-center space-x-2">
-              <div className="w-7 h-7 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
-                <Bell className="w-4 h-4" />
+        <div className="mt-6 grid gap-6 lg:mt-0 lg:grid-cols-3">
+          <article className="relative min-h-64 overflow-hidden rounded-lg border border-[#4d4732] border-t-4 border-t-[#ffd700] bg-[#2a2a2a] p-7 lg:min-h-[300px] lg:p-10">
+            <BarChart3 className="absolute -bottom-8 -right-7 h-44 w-44 text-[#ffd700]/[.05]" />
+            <div className="relative flex h-full flex-col justify-between">
+              <div>
+                <p className="text-[11px] font-extrabold uppercase tracking-[.16em] text-[#ffd700]">Panel operativo</p>
+                <h2 className="mt-6 text-4xl font-extrabold leading-[1.06] tracking-[-.035em] text-[#fff6df] xl:text-5xl">Hola,<br />Analista</h2>
+                <p className="mt-3 text-sm text-[#d0c6ab]">Resumen operativo del día.</p>
               </div>
-              <h2 className="text-base font-bold text-[#5A1F2D]">
-                Alertas de Cumplimiento Prioritarias
-              </h2>
+              <p className="mt-8 text-xs font-semibold text-[#999077]">{empresas.length} empresas bajo supervisión</p>
             </div>
+          </article>
 
-            <button
-              onClick={() => onNavigateTab('alertas')}
-              className="text-xs font-bold text-[#9A4D5D] hover:underline flex items-center gap-0.5 cursor-pointer"
-            >
-              <span>Ver todas</span>
-              <ChevronRight className="w-3.5 h-3.5" />
+          <MetricCard
+            icono={FileText}
+            etiqueta="Solicitudes pendientes"
+            valor={pendientes}
+            detalle="Requieren revisión de admisión"
+            tendencia="Revisar bandeja"
+            onClick={() => onNavigateTab('solicitudes')}
+          />
+          <MetricCard
+            icono={AlertTriangle}
+            etiqueta="Alertas críticas"
+            valor={criticas.length}
+            detalle="Acción regulatoria requerida"
+            tendencia="Prioridad alta"
+            critica
+            onClick={() => onNavigateTab('alertas')}
+          />
+        </div>
+      </section>
+
+      <section className="grid gap-6 lg:grid-cols-3">
+        <article className="rounded-lg border border-[#4d4732] bg-[#1f1f1f] p-6">
+          <h2 className="text-lg font-bold text-[#fff6df]">Accesos rápidos</h2>
+          <div className="mt-5 space-y-3">
+            <button type="button" onClick={onOpenNewSolicitud} className="flex w-full items-center justify-between rounded-lg bg-[#ffd700] px-4 py-4 text-left text-xs font-extrabold uppercase tracking-[.05em] text-[#131313] hover:bg-[#ffe16d]">
+              <span className="flex items-center gap-3"><Plus className="h-5 w-5" /> Nueva solicitud</span><ArrowRight className="h-4 w-4" />
+            </button>
+            <button type="button" onClick={() => onNavigateTab('alertas')} className="flex w-full items-center justify-between rounded-lg border border-[#4d4732] bg-[#131313] px-4 py-4 text-left text-xs font-extrabold uppercase tracking-[.05em] text-[#fff6df] hover:border-[#ffd700]">
+              <span className="flex items-center gap-3"><Bell className="h-5 w-5 text-[#ffd700]" /> Ver alertas</span><ArrowRight className="h-4 w-4" />
+            </button>
+            <button type="button" onClick={() => onNavigateTab('reportes')} className="flex w-full items-center justify-between rounded-lg border border-[#4d4732] bg-[#131313] px-4 py-4 text-left text-xs font-extrabold uppercase tracking-[.05em] text-[#fff6df] hover:border-[#ffd700]">
+              <span className="flex items-center gap-3"><FileSearch className="h-5 w-5 text-[#ffd700]" /> Cumplimiento</span><ArrowRight className="h-4 w-4" />
             </button>
           </div>
+        </article>
 
-          <div className="space-y-3">
-            {alerts.slice(0, 4).map((alert) => {
-              const isHigh = alert.severity === 'Alta';
-
-              return (
-                <div
-                  key={alert.id}
-                  onClick={() => onSelectAlert(alert)}
-                  className="p-3.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-slate-50/50 hover:bg-white card-hover-effect cursor-pointer flex items-center justify-between gap-3"
-                >
-                  <div className="space-y-1 min-w-0">
-                    <div className="flex items-center space-x-2">
-                      <span
-                        className={`text-[10px] font-bold px-2 py-0.2 rounded uppercase shrink-0 ${
-                          isHigh ? 'bg-rose-100 text-rose-800 animate-alert-pulse' : 'bg-amber-100 text-amber-800'
-                        }`}
-                      >
-                        {alert.severity}
-                      </span>
-                      <span className="font-bold text-xs text-[#5A1F2D] truncate">
-                        {alert.company}
-                      </span>
-                    </div>
-                    <p className="text-xs text-slate-800 font-medium truncate">
-                      {alert.title}
-                    </p>
-                    <p className="text-[11px] text-[#6B5A52]">
-                      Vence: {alert.dueDate || alert.date} • {alert.category}
-                    </p>
-                  </div>
-
-                  <div className="shrink-0 text-right">
-                    {alert.deficitValue && (
-                      <span className="text-xs font-bold text-rose-600 block">
-                        {alert.deficitValue}
-                      </span>
-                    )}
-                    <span className="text-xs text-[#9A4D5D] font-semibold flex items-center gap-0.5">
-                      Gestionar <ChevronRight className="w-3 h-3" />
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
+        <article className="rounded-lg border border-[#4d4732] bg-[#1f1f1f] p-6 lg:col-span-2">
+          <div className="flex items-center justify-between gap-4">
+            <h2 className="text-lg font-bold text-[#fff6df]">Actividad reciente</h2>
+            <button type="button" onClick={() => onNavigateTab('solicitudes')} className="text-[11px] font-extrabold uppercase tracking-[.05em] text-[#ffd700] hover:underline">Ver todo</button>
           </div>
-        </div>
-
-        {/* Right Box: Solicitudes in Pipeline */}
-        <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-            <div className="flex items-center space-x-2">
-              <div className="w-7 h-7 rounded-lg bg-sky-50 text-[#9A4D5D] flex items-center justify-center">
-                <FileText className="w-4 h-4" />
-              </div>
-              <h2 className="text-base font-bold text-[#5A1F2D]">
-                Solicitudes de Régimen Recientes
-              </h2>
-            </div>
-
-            <button
-              onClick={() => onNavigateTab('solicitudes')}
-              className="text-xs font-bold text-[#9A4D5D] hover:underline flex items-center gap-0.5 cursor-pointer"
-            >
-              <span>Ver todas</span>
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-
-          <div className="space-y-3">
-            {solicitudes.slice(0, 4).map((sol) => (
-              <div
-                key={sol.id}
-                onClick={() => onNavigateTab('solicitudes')}
-                className="p-3.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-slate-50/50 hover:bg-white card-hover-effect cursor-pointer flex items-center justify-between gap-3"
+          <div className="mt-4 divide-y divide-[#4d4732]">
+            {recientes.length ? recientes.map((item) => (
+              <button
+                type="button"
+                key={item.id}
+                onClick={() => item.tipo === 'alerta' && item.alerta ? onSelectAlert(item.alerta) : onNavigateTab('solicitudes')}
+                className="flex w-full items-center gap-4 py-4 text-left hover:bg-[#2a2a2a]/50"
               >
-                <div className="space-y-1 min-w-0">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-[10px] font-mono font-bold text-slate-500 bg-slate-200/80 px-1.5 py-0.2 rounded">
-                      {sol.id}
-                    </span>
-                    <span className="font-bold text-xs text-[#5A1F2D] truncate">
-                      {sol.companyName}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[11px] text-[#6B5A52]">
-                    <span className="flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-slate-400" />
-                      {sol.zonaFranca}
-                    </span>
-                    <span>•</span>
-                    <span className="font-semibold text-slate-700">
-                      ${(sol.investmentUSD / 1000000).toFixed(1)}M USD
-                    </span>
-                  </div>
-                </div>
-
-                <div className="shrink-0 text-right">
-                  <span
-                    className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold ${
-                      sol.status === 'Aprobada'
-                        ? 'bg-emerald-100 text-emerald-800'
-                        : sol.status === 'En Evaluación'
-                        ? 'bg-sky-100 text-sky-800'
-                        : 'bg-amber-100 text-amber-800'
-                    }`}
-                  >
-                    {sol.status}
-                  </span>
-                  <div className="text-[11px] text-indigo-600 font-bold mt-1 flex items-center justify-end gap-1">
-                    <Cpu className="w-3 h-3" />
-                    <span>{sol.aiScore}% IA</span>
-                  </div>
-                </div>
-              </div>
-            ))}
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#4d4732] bg-[#131313] text-[#d0c6ab]">
+                  {item.tipo === 'alerta' ? <Bell className="h-4 w-4" /> : <CheckCircle2 className="h-4 w-4" />}
+                </span>
+                <span className="min-w-0 flex-1"><span className="block truncate text-sm font-bold text-[#e2e2e2]">{item.titulo}</span><span className="mt-1 block truncate text-xs text-[#999077]">{item.detalle}</span></span>
+                <span className="hidden text-right sm:block"><span className="block text-[11px] font-bold text-[#d0c6ab]">{item.momento}</span><span className="mt-1 inline-block rounded bg-[#2a2a2a] px-2 py-1 text-[9px] font-extrabold uppercase text-[#ffd700]">{item.estado}</span></span>
+                <ArrowRight className="h-4 w-4 shrink-0 text-[#999077]" />
+              </button>
+            )) : <div className="py-12 text-center text-sm text-[#999077]">La actividad aparecerá cuando existan solicitudes o alertas.</div>}
           </div>
-        </div>
-      </div>
+        </article>
+      </section>
     </div>
   );
 };
+
+interface MetricCardProps {
+  icono: React.ComponentType<{ className?: string }>;
+  etiqueta: string;
+  valor: number;
+  detalle: string;
+  tendencia: string;
+  critica?: boolean;
+  onClick: () => void;
+}
+
+const MetricCard: React.FC<MetricCardProps> = ({ icono: Icono, etiqueta, valor, detalle, tendencia, critica, onClick }) => (
+  <button type="button" onClick={onClick} className={`group min-h-56 rounded-lg border border-[#4d4732] border-t-4 bg-[#1f1f1f] p-7 text-left transition hover:bg-[#242424] lg:min-h-[300px] ${critica ? 'border-t-[#ffb4ab]' : 'border-t-[#ffd700]'}`}>
+    <div className="flex items-start justify-between gap-4">
+      <div><h2 className="text-lg font-bold text-[#e2e2e2]">{etiqueta}</h2><p className="mt-1 text-xs text-[#999077]">{detalle}</p></div>
+      <Icono className={`h-7 w-7 ${critica ? 'text-[#ffb4ab]' : 'text-[#ffd700]'}`} />
+    </div>
+    <div className={`mt-12 text-6xl font-extrabold tracking-[-.04em] ${critica ? 'text-[#ffb4ab]' : 'text-[#fff6df]'}`}>{valor}</div>
+    <div className={`mt-6 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.04em] ${critica ? 'text-[#ffb4ab]' : 'text-[#79f5ff]'}`}><TrendingUp className="h-4 w-4" /> {tendencia}</div>
+  </button>
+);

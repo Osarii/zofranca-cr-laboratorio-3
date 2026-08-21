@@ -43,10 +43,10 @@ export const AlertsKanbanView: React.FC<AlertsKanbanViewProps> = ({
             {/* Column Header */}
             <div className="flex items-center justify-between mb-3 pb-2 border-b border-slate-200">
               <div className="flex items-center space-x-2">
-                <h3 className="font-bold text-xs uppercase tracking-wider text-[#5A1F2D]">
+                <h3 className="font-bold text-xs uppercase tracking-wider text-[#E1B84C]">
                   {column.label}
                 </h3>
-                <span className="w-5 h-5 rounded-full bg-white text-slate-700 text-[11px] font-bold flex items-center justify-center border border-slate-200 shadow-xs">
+                <span className="w-5 h-5 rounded-full bg-[#17181C] text-slate-700 text-[11px] font-bold flex items-center justify-center border border-slate-200 shadow-xs">
                   {columnAlerts.length}
                 </span>
               </div>
@@ -61,7 +61,7 @@ export const AlertsKanbanView: React.FC<AlertsKanbanViewProps> = ({
                   <div
                     key={alert.id}
                     onClick={() => onSelectAlert(alert)}
-                    className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs card-hover-effect cursor-pointer space-y-2.5"
+                    className="bg-[#17181C] p-4 rounded-xl border border-slate-200 shadow-xs card-hover-effect cursor-pointer space-y-2.5"
                   >
                     <div className="flex items-start justify-between">
                       <span
@@ -75,15 +75,15 @@ export const AlertsKanbanView: React.FC<AlertsKanbanViewProps> = ({
                       >
                         {alert.severity}
                       </span>
-                      <span className="text-[11px] text-[#6B5A52] flex items-center gap-1">
+                      <span className="text-[11px] text-[#C5C2BA] flex items-center gap-1">
                         <Calendar className="w-3 h-3 text-slate-400" />
                         {alert.date}
                       </span>
                     </div>
 
                     <div>
-                      <div className="flex items-center space-x-1.5 text-xs font-bold text-[#5A1F2D]">
-                        <Building2 className="w-3.5 h-3.5 text-[#9A4D5D]" />
+                      <div className="flex items-center space-x-1.5 text-xs font-bold text-[#E1B84C]">
+                        <Building2 className="w-3.5 h-3.5 text-[#D2A12D]" />
                         <span className="truncate">{alert.company}</span>
                       </div>
                       <h4 className="text-xs font-semibold text-slate-800 mt-1 line-clamp-2">
@@ -92,18 +92,18 @@ export const AlertsKanbanView: React.FC<AlertsKanbanViewProps> = ({
                     </div>
 
                     {alert.deficitValue && (
-                      <div className="text-[11px] bg-slate-50 p-1.5 rounded border border-slate-100 flex items-center justify-between text-[#6B5A52]">
+                      <div className="text-[11px] bg-slate-50 p-1.5 rounded border border-slate-100 flex items-center justify-between text-[#C5C2BA]">
                         <span>Déficit:</span>
                         <span className="font-bold text-rose-600">{alert.deficitValue}</span>
                       </div>
                     )}
 
-                    <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-[#6B5A52]">
+                    <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-[#C5C2BA]">
                       <div className="flex items-center space-x-1">
                         <User className="w-3 h-3 text-slate-400" />
                         <span className="text-[11px] truncate max-w-[100px]">{alert.assignedTo || 'Laura M.'}</span>
                       </div>
-                      <span className="text-[#9A4D5D] font-bold text-[11px] hover:underline flex items-center gap-0.5">
+                      <span className="text-[#D2A12D] font-bold text-[11px] hover:underline flex items-center gap-0.5">
                         Ver <ChevronRight className="w-3 h-3" />
                       </span>
                     </div>

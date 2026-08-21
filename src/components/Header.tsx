@@ -51,20 +51,20 @@ export const Header: React.FC<HeaderProps> = ({
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-[#5A1F2D] text-white shadow-md">
+    <header className="sticky top-0 z-40 border-b border-[#34363C] bg-[#17181C] text-[#E1B84C] shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Brand Zone */}
           <div className="flex items-center space-x-3 shrink-0">
             <button 
               onClick={() => setCurrentTab('dashboard')}
-              className="flex items-center space-x-2.5 text-left group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9A4D5D] rounded-md py-1 cursor-pointer transition-transform duration-150 hover:scale-[1.02]"
+              className="flex items-center space-x-2.5 text-left group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A77B1C] rounded-md py-1 cursor-pointer transition-transform duration-150 hover:scale-[1.02]"
             >
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#9A4D5D] to-emerald-400 flex items-center justify-center font-extrabold text-white text-lg shadow-sm">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#A77B1C] to-emerald-400 flex items-center justify-center font-extrabold text-white text-lg shadow-sm">
                 Z
               </div>
               <div className="flex items-center space-x-1.5">
-                <span className="font-extrabold text-xl tracking-tight text-white group-hover:text-[#9A4D5D] transition-colors">
+                <span className="font-extrabold text-xl tracking-tight text-white group-hover:text-[#D2A12D] transition-colors">
                   ZoFranca CR
                 </span>
                 <span className="bg-white/10 text-white/90 px-1.5 py-0.5 rounded text-[11px] font-semibold">
@@ -83,13 +83,13 @@ export const Header: React.FC<HeaderProps> = ({
                 <button
                   key={item.id}
                   onClick={() => setCurrentTab(item.id)}
-                  className={`relative flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9A4D5D] cursor-pointer ${
+                  className={`relative flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A77B1C] cursor-pointer ${
                     isActive
                       ? 'bg-white/15 text-white shadow-inner font-semibold'
                       : 'text-slate-200 hover:bg-white/10 hover:text-white hover:shadow-xs'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-[#9A4D5D]' : 'opacity-80'}`} />
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-[#D2A12D]' : 'opacity-80'}`} />
                   <span>{item.label}</span>
                   {item.badge !== undefined && item.badge > 0 && (
                     <span className="ml-1 px-1.5 py-0.2 rounded-full text-[11px] font-bold bg-rose-500 text-white animate-alert-pulse">
@@ -106,7 +106,7 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Quick new application button with hover elevation */}
             <button
               onClick={onOpenNewSolicitud}
-              className="hidden sm:inline-flex items-center space-x-1.5 px-3.5 py-1.5 bg-[#9A4D5D] hover:bg-[#7C3545] active:bg-[#713044] text-white text-xs font-bold rounded-lg shadow-sm hover:shadow-md transition-all duration-150 cursor-pointer"
+              className="hidden sm:inline-flex items-center space-x-1.5 px-3.5 py-1.5 bg-[#A77B1C] hover:bg-[#BF9124] active:bg-[#8A6516] text-white text-xs font-bold rounded-lg shadow-sm hover:shadow-md transition-all duration-150 cursor-pointer"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Nueva Solicitud</span>
@@ -115,13 +115,13 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Bell button with subtle pulse if alerts exist */}
             <button
               onClick={() => setCurrentTab('alertas')}
-              className="relative p-2 text-slate-300 hover:text-white rounded-lg hover:bg-white/10 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9A4D5D] cursor-pointer"
+              className="relative p-2 text-slate-300 hover:text-white rounded-lg hover:bg-white/10 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A77B1C] cursor-pointer"
               title="Alertas de Cumplimiento"
               aria-label="Ver alertas"
             >
               <Bell className="w-5 h-5" />
               {alertsCount > 0 && (
-                <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-rose-500 rounded-full ring-2 ring-[#5A1F2D] animate-pulse" />
+                <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-rose-500 rounded-full ring-2 ring-[#7A5B12] animate-pulse" />
               )}
             </button>
 
@@ -129,9 +129,9 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="relative">
               <button
                 onClick={() => setShowUserMenu(!showUserMenu)}
-                className="flex items-center space-x-2.5 pl-2 pr-3 py-1.5 rounded-lg hover:bg-white/10 text-left transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9A4D5D] cursor-pointer"
+                className="flex items-center space-x-2.5 pl-2 pr-3 py-1.5 rounded-lg hover:bg-white/10 text-left transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A77B1C] cursor-pointer"
               >
-                <div className="w-8 h-8 rounded-full bg-[#9A4D5D] border border-white/20 flex items-center justify-center text-white text-xs font-bold shadow-sm">
+                <div className="w-8 h-8 rounded-full bg-[#A77B1C] border border-white/20 flex items-center justify-center text-white text-xs font-bold shadow-sm">
                   <User className="w-4 h-4" />
                 </div>
                 <div className="hidden lg:block text-left leading-tight">
@@ -142,7 +142,7 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
 
               {showUserMenu && (
-                <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-50 text-slate-800 animate-in fade-in-50 duration-100">
+                <div className="absolute right-0 mt-2 w-64 bg-[#17181C] rounded-xl shadow-xl border border-slate-200 py-2 z-50 text-slate-800 animate-in fade-in-50 duration-100">
                   <div className="px-3.5 py-2 border-b border-slate-100">
                     <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Cambiar Perfil Demo</p>
                   </div>
@@ -154,18 +154,18 @@ export const Header: React.FC<HeaderProps> = ({
                         setShowUserMenu(false);
                       }}
                       className={`w-full text-left px-3.5 py-2 text-xs flex items-center justify-between hover:bg-slate-50 transition-colors cursor-pointer ${
-                        currentUser === u.name ? 'bg-sky-50 text-[#5A1F2D] font-bold' : 'text-slate-700'
+                        currentUser === u.name ? 'bg-sky-50 text-[#E1B84C] font-bold' : 'text-slate-700'
                       }`}
                     >
                       <div className="flex items-center space-x-2">
                         <User className="w-3.5 h-3.5 text-slate-400" />
                         <div>
                           <div className="font-bold text-slate-900">{u.name}</div>
-                          <div className="text-[11px] text-[#6B5A52]">{u.role}</div>
+                          <div className="text-[11px] text-[#C5C2BA]">{u.role}</div>
                         </div>
                       </div>
                       {currentUser === u.name && (
-                        <span className="text-xs text-[#9A4D5D] font-bold">Activo</span>
+                        <span className="text-xs text-[#D2A12D] font-bold">Activo</span>
                       )}
                     </button>
                   ))}
@@ -175,7 +175,7 @@ export const Header: React.FC<HeaderProps> = ({
                         onOpenNewSolicitud();
                         setShowUserMenu(false);
                       }}
-                      className="w-full text-left px-3 py-1.5 text-xs text-[#9A4D5D] hover:bg-sky-50 rounded-md font-bold flex items-center space-x-1.5 cursor-pointer"
+                      className="w-full text-left px-3 py-1.5 text-xs text-[#D2A12D] hover:bg-sky-50 rounded-md font-bold flex items-center space-x-1.5 cursor-pointer"
                     >
                       <Plus className="w-3.5 h-3.5" />
                       <span>Nueva Solicitud de Régimen</span>

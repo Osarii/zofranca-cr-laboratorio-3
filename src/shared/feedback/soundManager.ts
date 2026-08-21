@@ -3,10 +3,17 @@ import { Howl, Howler } from 'howler';
 export type TipoSonido = 'exito' | 'advertencia' | 'error' | 'notificacion';
 
 const archivos: Record<TipoSonido, string> = {
-  exito: '/sounds/exito.wav',
-  advertencia: '/sounds/advertencia.wav',
-  error: '/sounds/error.wav',
-  notificacion: '/sounds/notificacion.wav',
+  exito: '/sounds/exito.wav?v=13',
+  advertencia: '/sounds/advertencia.wav?v=13',
+  error: '/sounds/error.wav?v=13',
+  notificacion: '/sounds/notificacion.wav?v=13',
+};
+
+const volumenPorTipo: Record<TipoSonido, number> = {
+  exito: 0.72,
+  advertencia: 0.69,
+  error: 0.72,
+  notificacion: 0.67,
 };
 
 let bancoSonidos: Partial<Record<TipoSonido, Howl>> = {};
@@ -17,7 +24,7 @@ export function reproducirSonido(tipo: TipoSonido) {
 
   const sonido = bancoSonidos[tipo] ?? new Howl({
     src: [archivos[tipo]],
-    volume: tipo === 'error' ? 0.95 : 0.85,
+    volume: volumenPorTipo[tipo],
     preload: true,
   });
 

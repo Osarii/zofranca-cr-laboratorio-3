@@ -50,7 +50,7 @@ export const AlertsCardsView: React.FC<AlertsCardsViewProps> = ({
   return (
     <div className="space-y-5 animate-in fade-in duration-200">
       {/* Filter Bar */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
+      <div className="bg-[#17181C] p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
         <div className="relative flex-1">
           <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
@@ -66,7 +66,7 @@ export const AlertsCardsView: React.FC<AlertsCardsViewProps> = ({
           <select
             value={severityFilter}
             onChange={(e) => setSeverityFilter(e.target.value)}
-            className="px-3 py-2 text-xs font-semibold bg-white border border-slate-200 rounded-lg text-[#5A1F2D] focus-turquoise cursor-pointer"
+            className="px-3 py-2 text-xs font-semibold bg-[#17181C] border border-slate-200 rounded-lg text-[#E1B84C] focus-turquoise cursor-pointer"
           >
             <option value="all">Todas las Severidades</option>
             <option value="Alta">Severidad Alta</option>
@@ -77,7 +77,7 @@ export const AlertsCardsView: React.FC<AlertsCardsViewProps> = ({
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 text-xs font-semibold bg-white border border-slate-200 rounded-lg text-[#5A1F2D] focus-turquoise cursor-pointer"
+            className="px-3 py-2 text-xs font-semibold bg-[#17181C] border border-slate-200 rounded-lg text-[#E1B84C] focus-turquoise cursor-pointer"
           >
             <option value="all">Todos los Estados</option>
             <option value="Pendiente">Pendiente</option>
@@ -89,7 +89,7 @@ export const AlertsCardsView: React.FC<AlertsCardsViewProps> = ({
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="px-3 py-2 text-xs font-semibold bg-white border border-slate-200 rounded-lg text-[#5A1F2D] focus-turquoise cursor-pointer"
+            className="px-3 py-2 text-xs font-semibold bg-[#17181C] border border-slate-200 rounded-lg text-[#E1B84C] focus-turquoise cursor-pointer"
           >
             <option value="all">Todas las Categorías</option>
             <option value="Empleo">Empleo</option>
@@ -110,20 +110,20 @@ export const AlertsCardsView: React.FC<AlertsCardsViewProps> = ({
           return (
             <div
               key={alert.id}
-              className="bg-white rounded-2xl border border-slate-200 shadow-sm card-hover-effect flex flex-col justify-between overflow-hidden"
+              className="bg-[#17181C] rounded-2xl border border-slate-200 shadow-sm card-hover-effect flex flex-col justify-between overflow-hidden"
             >
               {/* Card Header */}
               <div className="p-5 pb-3">
                 <div className="flex items-start justify-between gap-2 mb-3">
                   <div className="flex items-center space-x-2.5">
-                    <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-[#5A1F2D] font-bold shrink-0">
-                      <Building2 className="w-5 h-5 text-[#9A4D5D]" />
+                    <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-[#E1B84C] font-bold shrink-0">
+                      <Building2 className="w-5 h-5 text-[#D2A12D]" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-sm text-[#5A1F2D] leading-tight">
+                      <h3 className="font-bold text-sm text-[#E1B84C] leading-tight">
                         {alert.company}
                       </h3>
-                      <div className="flex items-center text-xs text-[#6B5A52] mt-0.5">
+                      <div className="flex items-center text-xs text-[#C5C2BA] mt-0.5">
                         <MapPin className="w-3 h-3 mr-1 text-slate-400" />
                         <span>{alert.zonaFranca || 'Zona Franca Central'}</span>
                       </div>
@@ -148,7 +148,7 @@ export const AlertsCardsView: React.FC<AlertsCardsViewProps> = ({
                   <h4 className="text-sm font-bold text-slate-800 leading-snug">
                     {alert.title}
                   </h4>
-                  <p className="text-xs text-[#6B5A52] line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-[#C5C2BA] line-clamp-2 leading-relaxed">
                     {alert.description || alert.tipoIncumplimiento}
                   </p>
                 </div>
@@ -157,9 +157,9 @@ export const AlertsCardsView: React.FC<AlertsCardsViewProps> = ({
               {/* Metrics / Compliance Context */}
               <div className="px-5 py-3 bg-slate-50 border-y border-slate-100 space-y-2 text-xs">
                 {alert.deficitValue && (
-                  <div className="flex items-center justify-between text-[#6B5A52]">
+                  <div className="flex items-center justify-between text-[#C5C2BA]">
                     <span className="font-medium flex items-center gap-1.5">
-                      {alert.category === 'Empleo' ? <Users className="w-3.5 h-3.5 text-[#9A4D5D]" /> : <DollarSign className="w-3.5 h-3.5 text-[#9A4D5D]" />}
+                      {alert.category === 'Empleo' ? <Users className="w-3.5 h-3.5 text-[#D2A12D]" /> : <DollarSign className="w-3.5 h-3.5 text-[#D2A12D]" />}
                       Déficit Registrado:
                     </span>
                     <span className="font-bold text-rose-600">
@@ -167,7 +167,7 @@ export const AlertsCardsView: React.FC<AlertsCardsViewProps> = ({
                     </span>
                   </div>
                 )}
-                <div className="flex items-center justify-between text-[#6B5A52]">
+                <div className="flex items-center justify-between text-[#C5C2BA]">
                   <span className="font-medium flex items-center gap-1.5">
                     <User className="w-3.5 h-3.5 text-slate-400" />
                     Responsable Asignado:
@@ -176,7 +176,7 @@ export const AlertsCardsView: React.FC<AlertsCardsViewProps> = ({
                     {alert.assignedTo || 'Laura Monge'}
                   </span>
                 </div>
-                <div className="flex items-center justify-between text-[#6B5A52]">
+                <div className="flex items-center justify-between text-[#C5C2BA]">
                   <span className="font-medium flex items-center gap-1.5">
                     <Calendar className="w-3.5 h-3.5 text-slate-400" />
                     Fecha Límite:
@@ -188,7 +188,7 @@ export const AlertsCardsView: React.FC<AlertsCardsViewProps> = ({
               </div>
 
               {/* Card Footer */}
-              <div className="p-4 bg-white flex items-center justify-between">
+              <div className="p-4 bg-[#17181C] flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
                   <span
                     className={`inline-block w-2 h-2 rounded-full ${
@@ -208,7 +208,7 @@ export const AlertsCardsView: React.FC<AlertsCardsViewProps> = ({
 
                 <button
                   onClick={() => onSelectAlert(alert)}
-                  className="px-3.5 py-1.5 bg-[#5A1F2D] hover:bg-[#6E2638] active:bg-[#2B0D16] text-white text-xs font-bold rounded-lg shadow-xs hover:shadow-md transition-all duration-150 flex items-center gap-1 cursor-pointer"
+                  className="px-3.5 py-1.5 bg-[#7A5B12] hover:bg-[#947019] active:bg-[#5C430D] text-white text-xs font-bold rounded-lg shadow-xs hover:shadow-md transition-all duration-150 flex items-center gap-1 cursor-pointer"
                 >
                   <span>Atender Caso</span>
                   <ChevronRight className="w-3.5 h-3.5" />
@@ -220,12 +220,12 @@ export const AlertsCardsView: React.FC<AlertsCardsViewProps> = ({
       </div>
 
       {filteredAlerts.length === 0 && (
-        <div className="bg-white rounded-2xl p-12 text-center border border-slate-200 shadow-sm space-y-3">
+        <div className="bg-[#17181C] rounded-2xl p-12 text-center border border-slate-200 shadow-sm space-y-3">
           <div className="w-12 h-12 rounded-full bg-slate-100 text-slate-400 mx-auto flex items-center justify-center">
             <Search className="w-6 h-6" />
           </div>
-          <h3 className="text-base font-bold text-[#5A1F2D]">No se encontraron alertas con estos filtros</h3>
-          <p className="text-xs text-[#6B5A52] max-w-sm mx-auto">
+          <h3 className="text-base font-bold text-[#E1B84C]">No se encontraron alertas con estos filtros</h3>
+          <p className="text-xs text-[#C5C2BA] max-w-sm mx-auto">
             Prueba ajustando los términos de búsqueda o restableciendo los selectores de severidad y categoría.
           </p>
         </div>

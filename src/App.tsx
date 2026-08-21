@@ -30,7 +30,7 @@ import type { NuevaSolicitud, NuevaZonaFranca, SolicitudApi, ZonaFranca } from '
 
 export default function App() {
   const { notificar } = useFeedback();
-  const [currentTab, setCurrentTab] = useState<string>('solicitudes');
+  const [currentTab, setCurrentTab] = useState<string>('dashboard');
   const [currentUser, setCurrentUser] = useState<string>('Jared Prendas');
   const [alerts, setAlerts] = useState<AlertItem[]>(initialAlerts);
   const [companies] = useState<EmpresaItem[]>(initialCompanies);
@@ -149,7 +149,7 @@ export default function App() {
   const abrirPdf = (solicitud: SolicitudApi) => setPdfSolicitud(adaptarSolicitud(solicitud, zonasFrancas));
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#F7F0E6] text-[#6B5A52]">
+    <div className="min-h-screen bg-transparent text-[#e2e2e2]">
       <Header
         currentTab={currentTab}
         setCurrentTab={navegar}
@@ -157,9 +157,11 @@ export default function App() {
         setCurrentUser={setCurrentUser}
         alertsCount={activeAlertsCount}
         onOpenNewSolicitud={() => setIsNewSolicitudOpen(true)}
+        detailMode={Boolean(selectedSolicitud)}
       />
 
-      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 lg:px-8">
+      <main className="min-h-screen w-full px-4 pb-28 pt-24 sm:px-6 lg:ml-64 lg:w-[calc(100%-16rem)] lg:px-10 lg:pb-12 lg:pt-28 xl:px-12">
+        <div className="mx-auto w-full max-w-[1440px]">
         <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={`${currentTab}-${selectedSolicitud?.id ?? 'principal'}`}
@@ -186,6 +188,7 @@ export default function App() {
         {currentTab === 'configuracion' && <ConfiguracionView />}
         </motion.div>
         </AnimatePresence>
+        </div>
       </main>
 
       <NewSolicitudModal isOpen={isNewSolicitudOpen} zonasFrancas={zonasFrancas} onClose={() => setIsNewSolicitudOpen(false)} onSubmit={crearSolicitud} />

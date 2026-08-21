@@ -88,22 +88,22 @@ export const AlertsExecutiveView: React.FC<AlertsExecutiveProps> = ({
         {/* Card 1: Total Alertas (30 días) */}
         <div 
           onClick={() => setActiveFilter('Todas')}
-          className={`bg-white rounded-2xl p-5 border shadow-sm cursor-pointer card-hover-effect ${
-            activeFilter === 'Todas' ? 'border-[#9A4D5D] ring-2 ring-[#9A4D5D]/20' : 'border-slate-200'
+          className={`bg-[#17181C] rounded-2xl p-5 border shadow-sm cursor-pointer card-hover-effect ${
+            activeFilter === 'Todas' ? 'border-[#A77B1C] ring-2 ring-[#A77B1C]/20' : 'border-slate-200'
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-[#6B5A52] uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#C5C2BA] uppercase tracking-wider">
               Total Alertas (30 días)
             </span>
-            <div className="w-8 h-8 rounded-lg bg-sky-50 flex items-center justify-center text-[#9A4D5D]">
+            <div className="w-8 h-8 rounded-lg bg-sky-50 flex items-center justify-center text-[#D2A12D]">
               <Bell className="w-4 h-4" />
             </div>
           </div>
           
           <div className="flex items-baseline justify-between mt-3">
             <div>
-              <div className="text-[32px] font-extrabold text-[#5A1F2D] leading-tight">
+              <div className="text-[32px] font-extrabold text-[#E1B84C] leading-tight">
                 {totalAlerts}
               </div>
               <div className="text-xs text-emerald-600 font-semibold flex items-center gap-1 mt-0.5">
@@ -112,7 +112,7 @@ export const AlertsExecutiveView: React.FC<AlertsExecutiveProps> = ({
               </div>
             </div>
             <div className="pr-1">
-              {renderSparkline(sparklineData, '#9A4D5D')}
+              {renderSparkline(sparklineData, '#A77B1C')}
             </div>
           </div>
         </div>
@@ -120,7 +120,7 @@ export const AlertsExecutiveView: React.FC<AlertsExecutiveProps> = ({
         {/* Card 2: Severidad Alta */}
         <div 
           onClick={() => setActiveFilter('Alta')}
-          className={`bg-white rounded-2xl p-5 border shadow-sm cursor-pointer card-hover-effect ${
+          className={`bg-[#17181C] rounded-2xl p-5 border shadow-sm cursor-pointer card-hover-effect ${
             activeFilter === 'Alta' ? 'border-rose-400 ring-2 ring-rose-100' : 'border-slate-200'
           }`}
         >
@@ -152,7 +152,7 @@ export const AlertsExecutiveView: React.FC<AlertsExecutiveProps> = ({
         {/* Card 3: Severidad Media */}
         <div 
           onClick={() => setActiveFilter('Media')}
-          className={`bg-white rounded-2xl p-5 border shadow-sm cursor-pointer card-hover-effect ${
+          className={`bg-[#17181C] rounded-2xl p-5 border shadow-sm cursor-pointer card-hover-effect ${
             activeFilter === 'Media' ? 'border-amber-400 ring-2 ring-amber-100' : 'border-slate-200'
           }`}
         >
@@ -182,13 +182,13 @@ export const AlertsExecutiveView: React.FC<AlertsExecutiveProps> = ({
       </div>
 
       {/* Grid of Executive Alert Cards */}
-      <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-6">
+      <div className="bg-[#17181C] rounded-2xl p-6 border border-slate-200 shadow-sm space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h2 className="text-xl font-bold text-[#5A1F2D]">
+            <h2 className="text-xl font-bold text-[#E1B84C]">
               Panel Ejecutivo de Incidencias
             </h2>
-            <p className="text-sm text-[#6B5A52] mt-0.5">
+            <p className="text-sm text-[#C5C2BA] mt-0.5">
               Supervisión de compromisos de inversión, empleo y normativa Ley 7210
             </p>
           </div>
@@ -198,8 +198,8 @@ export const AlertsExecutiveView: React.FC<AlertsExecutiveProps> = ({
               onClick={() => setActiveFilter('Todas')}
               className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all duration-150 cursor-pointer ${
                 activeFilter === 'Todas'
-                  ? 'bg-[#5A1F2D] text-white shadow-sm'
-                  : 'bg-slate-100 text-[#6B5A52] hover:bg-slate-200'
+                  ? 'bg-[#7A5B12] text-white shadow-sm'
+                  : 'bg-slate-100 text-[#C5C2BA] hover:bg-slate-200'
               }`}
             >
               Todas ({totalAlerts})
@@ -235,16 +235,16 @@ export const AlertsExecutiveView: React.FC<AlertsExecutiveProps> = ({
               <div
                 key={alert.id}
                 onClick={() => onSelectAlert(alert)}
-                className={`bg-white rounded-xl p-4 border transition-all duration-200 flex flex-col justify-between space-y-3 cursor-pointer card-hover-effect ${
+                className={`bg-[#17181C] rounded-xl p-4 border transition-all duration-200 flex flex-col justify-between space-y-3 cursor-pointer card-hover-effect ${
                   isHigh ? 'border-slate-200 hover:border-rose-300' : 'border-slate-200 hover:border-amber-300'
                 }`}
               >
                 <div className="flex items-start justify-between">
                   <div className="flex items-center space-x-2 truncate">
-                    <div className="w-7 h-7 rounded-lg bg-sky-50 flex items-center justify-center text-[#9A4D5D] shrink-0">
+                    <div className="w-7 h-7 rounded-lg bg-sky-50 flex items-center justify-center text-[#D2A12D] shrink-0">
                       <Building2 className="w-4 h-4" />
                     </div>
-                    <span className="font-bold text-sm text-[#5A1F2D] truncate" title={alert.company}>
+                    <span className="font-bold text-sm text-[#E1B84C] truncate" title={alert.company}>
                       {alert.company}
                     </span>
                   </div>
@@ -264,17 +264,17 @@ export const AlertsExecutiveView: React.FC<AlertsExecutiveProps> = ({
                   <div className="text-xs font-bold text-slate-800 line-clamp-2">
                     {alert.title}
                   </div>
-                  <p className="text-[11px] text-[#6B5A52] line-clamp-2 leading-relaxed">
+                  <p className="text-[11px] text-[#C5C2BA] line-clamp-2 leading-relaxed">
                     {alert.description || alert.tipoIncumplimiento}
                   </p>
                 </div>
 
-                <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-[#6B5A52]">
+                <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-[#C5C2BA]">
                   <span className="flex items-center gap-1">
                     <Calendar className="w-3 h-3 text-slate-400" />
                     {alert.date}
                   </span>
-                  <span className="font-semibold text-[#9A4D5D] group-hover:underline flex items-center gap-0.5">
+                  <span className="font-semibold text-[#D2A12D] group-hover:underline flex items-center gap-0.5">
                     Detalle <ChevronRight className="w-3 h-3" />
                   </span>
                 </div>
@@ -287,9 +287,9 @@ export const AlertsExecutiveView: React.FC<AlertsExecutiveProps> = ({
         <div className="flex justify-center pt-2">
           <button
             onClick={onManageAll}
-            className="px-6 py-2.5 bg-[#5A1F2D] hover:bg-[#6E2638] active:bg-[#2B0D16] text-white font-bold text-xs rounded-xl shadow-sm hover:shadow-md transition-all duration-150 flex items-center space-x-2 cursor-pointer"
+            className="px-6 py-2.5 bg-[#7A5B12] hover:bg-[#947019] active:bg-[#5C430D] text-white font-bold text-xs rounded-xl shadow-sm hover:shadow-md transition-all duration-150 flex items-center space-x-2 cursor-pointer"
           >
-            <Layers className="w-4 h-4 text-[#9A4D5D]" />
+            <Layers className="w-4 h-4 text-[#D2A12D]" />
             <span>Gestionar Todas las Alertas en Vista Detallada</span>
             <ChevronRight className="w-4 h-4" />
           </button>
